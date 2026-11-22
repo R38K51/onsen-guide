@@ -6,6 +6,7 @@
   <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>温泉探し（仮称）</title>
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="./css/style.css">
   <script type="module" src="./src/main.js"></script>
 </head>
@@ -13,24 +14,18 @@
   <a class="skip-link" href="#main" data-i18n="skip">本文へ移動</a>
   <div class="page">
     <header class="site-header">
-      <span class="site-name" translate="no" data-i18n="site.name">温泉探し（仮称）</span>
+      <a class="site-name link-control" translate="no" href="#/" data-route="home" data-i18n="site.name">温泉探し（仮称）</a>
       <div class="lang-switch" role="group" aria-label="Language">
         <button type="button" data-lang="ja" aria-pressed="true" data-i18n="lang.ja">日本語</button>
         <button type="button" data-lang="en" aria-pressed="false" data-i18n="lang.en">English</button>
       </div>
-      <a class="link-control" href="#/about" data-i18n="nav.about">このサイトについて</a>
+      <a class="link-control" href="#/about" data-route="about" data-i18n="nav.about">このサイトについて</a>
     </header>
     <p class="unofficial" data-i18n="site.unofficial">非公式のサイトです。温泉協会、自治体、観光協会、環境省とは関係ありません。</p>
     <main id="main" tabindex="-1">
-      <h1 id="page-title" data-i18n="home.h1">湯の種類から、温泉地を探す</h1>
-      <p id="lead" data-i18n="home.lead">温泉の泉質（湯の種類）は11種類に分けて掲示されます。気になる種類を押してください。</p>
       <div id="app"></div>
-      <div id="live" aria-live="polite"></div>
     </main>
-    <footer class="site-footer">
-      <a class="link-control" href="#/about" data-i18n="nav.about">このサイトについて</a>
-      <span data-i18n="footer.license">MIT ライセンス</span>
-    </footer>
+    <footer class="site-footer" id="footer"></footer>
   </div>
 </body>
 </html>

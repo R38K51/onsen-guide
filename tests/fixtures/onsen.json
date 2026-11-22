@@ -1,0 +1,239 @@
+{
+ "reviewedAt": "2026-11-20",
+ "areas": [
+  {
+   "id": "sample",
+   "nameJa": "サンプル温泉",
+   "nameKana": "さんぷる",
+   "nameRoman": "Sample Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/sample",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "alpha",
+   "nameJa": "アルファ温泉",
+   "nameKana": "あるふぁ",
+   "nameRoman": "Alpha Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/alpha",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "ナトリウム－塩化物・硫酸塩泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物・硫酸塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "ナトリウム－塩化物・硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "ナトリウム－塩化物・硫酸塩泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "beta",
+   "nameJa": "ベータ温泉",
+   "nameKana": "べーた",
+   "nameRoman": "Beta Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/beta",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "含硫黄泉",
+     "type": "sulfur",
+     "matchedName": "含硫黄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "gamma",
+   "nameJa": "ガンマ温泉",
+   "nameKana": "がんま",
+   "nameRoman": "Gamma Onsen",
+   "prefecture": "akita",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/gamma",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "二酸化炭素泉",
+     "type": "co2",
+     "matchedName": "二酸化炭素泉",
+     "basis": "table"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "delta",
+   "nameJa": "デルタ温泉",
+   "nameKana": "でるた",
+   "nameRoman": "Delta Onsen",
+   "prefecture": "gunma",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/delta",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "酸性泉",
+     "type": "acid",
+     "matchedName": "酸性泉",
+     "basis": "table"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "epsilon",
+   "nameJa": "イプシロン温泉",
+   "nameKana": "いぷしろん",
+   "nameRoman": "Epsilon Onsen",
+   "prefecture": "gunma",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/epsilon",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "含鉄泉",
+     "type": "iron",
+     "matchedName": "含鉄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "zeta",
+   "nameJa": "ゼータ温泉",
+   "nameKana": "ぜーた",
+   "nameRoman": "Zeta Onsen",
+   "prefecture": "kanagawa",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/zeta",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "含アルミニウム泉",
+     "type": "aluminum",
+     "matchedName": "含アルミニウム泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "eta",
+   "nameJa": "イータ温泉",
+   "nameKana": "いーた",
+   "nameRoman": "Eta Onsen",
+   "prefecture": "oita",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/eta",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "含銅－鉄泉",
+     "type": "copperIron",
+     "matchedName": "含銅－鉄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "theta",
+   "nameJa": "シータ温泉",
+   "nameKana": "しーた",
+   "nameRoman": "Theta Onsen",
+   "prefecture": "oita",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/theta",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "塩化物泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "long",
+   "nameJa": "とても長い名前のテスト用温泉地サンプル温泉郷",
+   "nameKana": "ながい",
+   "nameRoman": "Totemo Nagai Namae no Tesuto Yo Onsenchi Sample Onsengo Onsen",
+   "prefecture": "akita",
+   "source": {
+    "publisher": "テスト観光協会",
+    "title": "テスト用ページ",
+    "url": "https://example.invalid/long",
+    "checkedAt": "2026-11-01"
+   },
+   "springs": [
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
+    }
+   ]
+  }
+ ]
+}
