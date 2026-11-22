@@ -35,6 +35,9 @@ function render() {
   const lang = detectLang(parsed.lang, navigator.language);
   setLang(lang);
   current = { ...parsed, lang };
+  // 不正な値を含む URL は、初期状態に戻した形へ直す（履歴は増やさない）
+  const canonical = buildHash({ ...parsed, lang: parsed.lang });
+  if (location.hash && location.hash !== canonical) history.replaceState(null, "", canonical);
 
   if (lang !== lastLang) {
     document.documentElement.lang = lang;

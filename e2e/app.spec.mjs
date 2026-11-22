@@ -177,6 +177,50 @@ for (const size of SIZES) {
         await waitReady(page);
         await expect(page.locator("button[aria-pressed=true].chip")).toHaveCount(0);
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](10));
+        expect(new URL(page.url()).hash).toBe(`#/?lang=${lang}`);
+      });
+
+      test("最初の画面に3つの注意：非公式、独自の訳、医療の助言ではない", async ({ page }) => {
+        await openApp(page, `#/?lang=${lang}`);
+        await waitReady(page);
+        const text = await page.locator("body").innerText();
+        const expected = {
+          ja: ["非公式", "独自の訳", "医療の助言ではありません"],
+          en: ["Unofficial", "our own translations", "Not medical advice"],
+        }[lang];
+        for (const word of expected) expect(text).toContain(word);
+        await expect(page.locator("section.panel")).toHaveCount(0);
+      });
+
+      test("条件を消す：押したあとフォーカスは都道府県の選択に移る", async ({ page }) => {
+        await openApp(page, `#/?type=simple&lang=${lang}`);
+        await waitReady(page);
+        await page.locator(".filter-row button").click();
+        await expect(page.locator(".filter-row button")).toBeHidden();
+        await expect(page.locator("#pref-select")).toBeFocused();
+      });
+
+      test("公式リンクの文字は1つの塊として折り返す（子が横に並ばない）", async ({ page }) => {
+        await openApp(page, `#/?lang=${lang}`);
+        await waitReady(page);
+        const bad = await page.evaluate(() => {
+          const out = [];
+          for (const a of document.querySelectorAll(".source-link")) {
+            const d = getComputedStyle(a).display;
+            if (d.includes("flex") || d.includes("grid")) out.push(`display ${d}`);
+            const spanTop = a.querySelector("span[lang]").getBoundingClientRect();
+            const text = a.getBoundingClientRect();
+            if (a.getClientRects().length < 1 || spanTop.left < text.left - 1) out.push("layout");
+          }
+          return out;
+        });
+        expect(bad).toEqual([]);
+        await page.goto("/#/about?lang=" + lang);
+        const d2 = await page.evaluate(() =>
+          [...document.querySelectorAll(".ref-link, .area-table a")].map((a) => getComputedStyle(a).display),
+        );
+        expect(d2.length).toBeGreaterThan(0);
+        for (const d of d2) expect(d).toBe("inline");
       });
 
       test("キーボードだけ：Tab の順、Space と Enter、フォーカスの輪", async ({ page }) => {

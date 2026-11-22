@@ -63,6 +63,8 @@ export default {
   "notice.source": "Spring types for each area are based on its official page. The classification follows the Ministry of the Environment's \"Classification of therapeutic spring types\" and its \"Old and new spring name correspondence table.\" Sources appear on each card and on the About page.",
   "notice.noMedical": "This site gives no medical advice. It does not list effects or indications. If you have a health condition or are unsure whether you can bathe, consult a doctor.",
   "notice.verify": "Always check the spring type, opening status, bathing conditions, and etiquette with the official guidance of the onsen or facility. We do not guarantee that this site is up to date or accurate.",
+  "notice.translationShort": "English names are our own translations, not official terms.",
+  "notice.noMedicalShort": "Not medical advice. If you have health concerns, consult a doctor.",
   "notice.translation": "English names are our own translations. They are not official terms.",
   "notice.processing": "Based on materials from the Ministry of the Environment, summarized and edited by the creator of this site. It is not produced by the Ministry.",
   "notice.noTracking": "No ads, bookings, ratings, prices, or user tracking.",

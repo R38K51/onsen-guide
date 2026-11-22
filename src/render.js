@@ -58,11 +58,23 @@ function numberFormat() {
 
 // 外部リンク（新しいタブ）。矢印は飾り
 function externalLink(href, className, ...labelNodes) {
+  // 矢印だけが次の行に落ちないよう、最後の1文字と矢印を折り返さない1組にする
+  const last = labelNodes[labelNodes.length - 1];
+  const head = labelNodes.slice(0, -1);
+  let tail = [last];
+  if (typeof last === "string" && last.length > 0) {
+    const chars = Array.from(last);
+    head.push(chars.slice(0, -1).join(""));
+    tail = [chars[chars.length - 1]];
+  } else {
+    head.push(last);
+    tail = [];
+  }
   return el(
     "a",
     { href, target: "_blank", rel: "noopener noreferrer", class: className },
-    ...labelNodes,
-    icon("arrow"),
+    ...head,
+    el("span", { class: "nowrap" }, ...tail, icon("arrow")),
   );
 }
 
@@ -118,6 +130,12 @@ export function createHomeView(actions) {
   const nf = numberFormat();
   const h1 = el("h1", { id: "page-title", tabindex: "-1", text: t("home.h1") });
   const lead = el("p", { id: "lead", class: "measure", text: t("home.lead") });
+  const notes = el(
+    "div",
+    { class: "home-notes measure" },
+    el("p", { text: t("notice.translationShort") }),
+    el("p", { text: t("notice.noMedicalShort") }),
+  );
 
   const chips = TYPE_IDS.map((id, i) => {
     const count = el("span", { class: "count" });
@@ -136,7 +154,11 @@ export function createHomeView(actions) {
   const select = el("select", { id: "pref-select" });
   select.addEventListener("change", () => actions.onPref(select.value || null));
   const clearButton = el("button", { type: "button", hidden: true, text: t("filter.clear") });
-  clearButton.addEventListener("click", () => actions.onClear());
+  // 押したボタンは消えるので、先にフォーカスを都道府県の選択へ移す
+  clearButton.addEventListener("click", () => {
+    select.focus();
+    actions.onClear();
+  });
   const filterRow = el(
     "div",
     { class: "filter-row" },
@@ -150,7 +172,7 @@ export function createHomeView(actions) {
   const resultsHost = el("div");
   const results = el("div", { class: "results" }, panelHost, heading, resultsHost);
 
-  const root = el("div", { class: "home" }, el("div", { class: "home-head" }, h1, lead), filters, results);
+  const root = el("div", { class: "home" }, el("div", { class: "home-head" }, h1, lead, notes), filters, results);
 
   let optionsKey = null;
   function setOptions(prefs, selected) {
@@ -168,7 +190,10 @@ export function createHomeView(actions) {
 
   function emptyBox() {
     const button = el("button", { type: "button", text: t("filter.clear") });
-    button.addEventListener("click", () => actions.onClear());
+    button.addEventListener("click", () => {
+      select.focus();
+      actions.onClear();
+    });
     return el(
       "div",
       { class: "state-box" },
