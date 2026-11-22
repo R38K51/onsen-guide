@@ -11,6 +11,7 @@ const MOE_REFS = [
   { key: "guideline", url: "https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf" },
   { key: "notice", url: "https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf" },
 ];
+const ISSUES_URL = "https://github.com/R38K51/onsen-guide/issues";
 
 export function el(tag, props = {}, ...children) {
   const node = document.createElement(tag);
@@ -337,7 +338,11 @@ export function createAboutView(status, data, formatDate) {
     section("about.data.h", ...dataBlock),
     section("about.translation.h", el("p", { class: "measure", text: t("notice.translation") }), el("p", { class: "measure", text: t("notice.processing") })),
     section("about.privacy.h", el("p", { class: "measure", text: t("notice.noTracking") }), el("p", { class: "measure", text: t("about.privacy.text") })),
-    section("about.contact.h", el("p", { class: "measure", text: t("about.contact.text") })),
+    section(
+      "about.contact.h",
+      el("p", { class: "measure", text: t("about.contact.text") }),
+      el("p", {}, externalLink(ISSUES_URL, "ref-link", ISSUES_URL, " ", t("about.contact.link"))),
+    ),
     section("about.license.h", el("p", { class: "measure", text: t("about.license.text") })),
     el("p", {}, el("a", { class: "link-control", href: buildHash({ route: "home", lang }), text: t("about.back") })),
   );

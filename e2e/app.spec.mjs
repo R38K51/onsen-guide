@@ -314,6 +314,7 @@ for (const size of SIZES) {
         expect(page.url()).toContain("#/about");
         expect(page.url()).toContain(`lang=${lang}`);
         await expect(page.locator('a[href*="env.go.jp"]')).toHaveCount(2);
+        await expect(page.locator('a[href="https://github.com/R38K51/onsen-guide/issues"]')).toHaveCount(1);
         for (const link of await page.locator("main a[target=_blank]").all()) {
           await expect(link).toHaveAttribute("rel", "noopener noreferrer");
         }

@@ -6,7 +6,7 @@ export default {
   "lang.ja": "日本語",
   "lang.en": "English",
   "home.h1": "湯の種類から、温泉地を探す",
-  "home.lead": "温泉の泉質（湯の種類）は10種類に分けて掲示されます。気になる種類を押してください。",
+  "home.lead": "温泉の掲示の基準（環境省の通知）では、泉質を10種類にまとめています。気になる種類を押してください。",
   "skip": "本文へ移動",
 
   "type.heading": "湯の種類（掲示用泉質名）",
@@ -64,7 +64,7 @@ export default {
   "notice.translationShort": "英語名はこのサイト独自の訳で、公的な表記ではありません。",
   "notice.noMedicalShort": "医療の助言ではありません。体調が気になるときは医師に相談してください。",
   "notice.translation": "英語名はこのサイト独自の訳で、公的な表記ではありません。",
-  "notice.processing": "環境省の資料をもとに、このサイトの制作者が要約し、加工しています。環境省が作成したものではありません。",
+  "notice.processing": "環境省の資料は、公共データ利用規約（第1.0版）に従って使っています。「鉱泉分析法指針（平成26年改訂）」（環境省）（https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf）、「温泉法第18条第1項の規定に基づく禁忌症及び入浴又は飲用上の注意の掲示等の基準」の通知（環境省）（https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf）を加工して作成。環境省が作成したものではありません。",
   "notice.noTracking": "広告、予約、評価、料金、利用者の追跡はありません。",
 
   "pref.hokkaido": "北海道",
@@ -135,7 +135,8 @@ export default {
   "about.privacy.h": "広告や追跡がないこと",
   "about.privacy.text": "このサイトは、外部のサービスへ通信しません。Cookie や保存領域も使いません。",
   "about.contact.h": "連絡先",
-  "about.contact.text": "連絡先は公開していません。誤りや不具合は、公開リポジトリの Issue で知らせてください（リポジトリの URL は公開時に決めます）。",
+  "about.contact.text": "連絡先は公開していません。誤りや要望は GitHub の Issues へ。",
+  "about.contact.link": "（外部サイト）",
   "about.license.h": "ライセンスと著作権表示",
   "about.license.text": "このサイトのコードは MIT ライセンスです。著作権表示：© R38K51",
   "about.back": "湯の種類から探す画面へ戻る",

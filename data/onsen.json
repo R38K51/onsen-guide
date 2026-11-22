@@ -730,13 +730,6 @@
      "matchedName": "含放射能－○－○泉",
      "basis": "structure",
      "note": "名前の始めの「含放射能」は、指針の特殊成分の冠（7ページ）。区切りが「/」"
-    },
-    {
-     "official": "含放射能/単純泉",
-     "type": "simple",
-     "matchedName": "単純温泉",
-     "basis": "structure",
-     "note": "「単純泉」は単純温泉の略した書き方。指針7ページの例（含硫黄・弱放射能－アルカリ性単純温泉）のように、冠と単純温泉が並ぶ名前がある"
     }
    ]
   },
@@ -805,12 +798,6 @@
     {
      "official": "酸性硫化水素泉",
      "type": "sulfur",
-     "matchedName": "酸性硫化水素泉",
-     "basis": "table"
-    },
-    {
-     "official": "酸性硫化水素泉",
-     "type": "sulfate",
      "matchedName": "酸性硫化水素泉",
      "basis": "table"
     },

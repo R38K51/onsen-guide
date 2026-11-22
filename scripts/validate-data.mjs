@@ -37,11 +37,12 @@ const DISCLAIMER_OK = [/保証しません/g, /\bdo not guarantee\b/gi];
 // 限界値の数字（mg、Bq、Ci、マッヘ、10 の累乗）。panel.criteria が空の間は辞書のどこにも置かない
 const LIMIT_NUMBER = /\d[\d,.]*\s*(mg|μg|㎎|Bq|Ci|マッヘ|mache)|×\s*10|10⁻/i;
 
-// src と index.html に置いてよい外部 URL（画面Bの環境省の2点と、SVG の名前空間）
+// src と index.html に置いてよい外部 URL（画面Bの環境省の2点と、連絡先の Issues と、SVG の名前空間）
 export const ALLOWED_URLS = [
   "http://www.w3.org/2000/svg",
   "https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf",
   "https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf",
+  "https://github.com/R38K51/onsen-guide/issues",
 ];
 
 const FORBIDDEN_APIS = ["XMLHttpRequest", "WebSocket", "sendBeacon", "innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval("];
@@ -225,7 +226,7 @@ export function validateDictionaries(ja, en) {
 // 1つのファイルの文字を検査する。外部 URL と禁止 API の使用を返す
 export function scanSource(text, name = "(text)") {
   const errors = [];
-  for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>]+/g)) {
+  for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>\u0080-￿]+/g)) {
     const url = m[0].replace(/[.,;]+$/, "");
     if (!ALLOWED_URLS.includes(url)) errors.push(`${name}: 許可していない外部 URL ${url}`);
   }

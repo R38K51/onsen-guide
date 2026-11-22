@@ -26,7 +26,7 @@
 > [!NOTE]
 > This is an unofficial site made by an individual. It is not affiliated with the Japan Onsen Association, the Ministry of the Environment, local governments, tourism associations, or lodgings. The classification is based on Ministry of the Environment documents, summarized and edited by this site. The Ministry did not make this site.
 >
-> Tested only with the Chromium bundled with Playwright 1.64.1 (automated tests, 390 px and 1366 px wide screens). Not tested on real phones, other browsers, or other operating systems.
+> Tested only with the Chromium bundled with Playwright 1.64.1 (automated tests, screen widths of 390, 768, 1366 and 1920 px). Not tested on real phones, other browsers, or other operating systems.
 
 ### Features
 
@@ -62,7 +62,7 @@ npm run test:e2e    # browser tests (Playwright)
 
 - **Does it send my data anywhere?** The page loads only its own files. It does not call other sites and has no analytics. Links to official pages open only when you click them, and those sites have their own policies. The browser tests found no requests to other sites.
 - **Privacy.** The site is hosted on GitHub Pages. GitHub records the IP address of visitors under its own policy. The site itself keeps nothing.
-- Only some onsen areas are included (21 at the time of writing). This is not a complete list of Japan.
+- Only some onsen areas are included (21 at the time of writing). This is not a complete list of onsen in Japan.
 - Some spring types have few areas listed. For example, "Carbon dioxide spring" and "Iodine-containing spring" have one each.
 - Spring types follow each area's official page and the Ministry of the Environment classification tables. Please check signs and official pages at the place. Linked pages may change or disappear.
 
@@ -70,7 +70,7 @@ npm run test:e2e    # browser tests (Playwright)
 
 - `data/classification.json` (spring-type classification) was made from the Ministry of the Environment's "Guidelines for Mineral Spring Analysis" (revised 2014, 鉱泉分析法指針) and the notice on the signs required by Article 18 of the Hot Springs Act. Both are linked on the site's About screen.
 - `data/onsen.json` (onsen areas) copies the spring-type names from the official pages of tourism associations and local governments, word for word. Each entry has its source URL and the date we checked it.
-- The Ministry of the Environment materials are used under the Government of Japan Standard Terms of Use (PDL 1.0), with the source shown. The content was processed and edited by this site. It was not made by the Ministry of the Environment.
+- The Ministry of the Environment materials are used under the Public Data License, version 1.0 (PDL 1.0). Created by processing "Mineral Spring Analysis Guidelines (revised 2014)" (Ministry of the Environment) (https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf) and the notice on "Standards for posting contraindications and bathing or drinking precautions under Article 18, paragraph 1 of the Hot Springs Act" (Ministry of the Environment) (https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf). It was not made by the Ministry of the Environment.
 
 ### License
 
@@ -85,7 +85,7 @@ MIT. See [LICENSE](LICENSE). The MIT license covers only this site's code. The r
 > [!NOTE]
 > これは個人が作った非公式のサイトです。日本温泉協会、環境省、自治体、観光協会、宿泊施設とは関係がありません。泉質の分類は環境省の資料をもとに、このサイトで要約・編集したものです。環境省が作ったものではありません。
 >
-> 確かめた環境は、Playwright 1.64.1 に付属の Chromium だけです（自動テスト、画面の幅390pxと1366px）。実際のスマホ、ほかのブラウザ、ほかのOSでは確かめていません。
+> 確かめた環境は、Playwright 1.64.1 に付属の Chromium だけです（自動テスト、画面の幅390、768、1366、1920px）。実際のスマホ、ほかのブラウザ、ほかのOSでは確かめていません。
 
 ### 特徴
 
@@ -129,7 +129,7 @@ npm run test:e2e    # ブラウザのテスト（Playwright）
 
 - `data/classification.json`（湯の種類の分類）は、環境省の「鉱泉分析法指針（平成26年改訂）」と、温泉法第18条の掲示の基準についての通知をもとに作りました。2つとも、サイトの「このサイトについて」の画面にリンクがあります。
 - `data/onsen.json`（温泉地）は、各観光協会・自治体の公式ページにある泉質名を、原文のまま写したものです。1件ごとに、出典のURLと確認日があります。
-- 環境省の資料は、政府標準利用規約（PDL1.0）に基づき、出典を示して使っています。内容は、このサイトで加工して作成したもので、環境省が作成したものではありません。
+- 環境省の資料は、公共データ利用規約（第1.0版）に従って使っています。「鉱泉分析法指針（平成26年改訂）」（環境省）（https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf）、「温泉法第18条第1項の規定に基づく禁忌症及び入浴又は飲用上の注意の掲示等の基準」の通知（環境省）（https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf）を加工して作成。環境省が作成したものではありません。
 
 ### ライセンス
 

@@ -137,3 +137,8 @@ test("実データ：対照表は10種類すべてを含み、各行に出典の
   const old = rows.filter((r) => r.source === "改訂前の資料");
   assert.ok(old.length > 0 && old.every((r) => r.current));
 });
+
+test("静的検査：日本語の括弧の直前までを URL とみなす", () => {
+  assert.deepEqual(scanSource("（https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf）を加工"), []);
+  assert.match(scanSource("（https://example.invalid/x）").join("\n"), /外部 URL/);
+});
