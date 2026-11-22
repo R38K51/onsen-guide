@@ -1,6 +1,6 @@
 // English dictionary. Keys must match ja.js exactly.
 export default {
-  "site.name": "Onsen Finder (working title)",
+  "site.name": "Onsen Finder",
   "site.unofficial": "Unofficial site. Not affiliated with any onsen association, local government, tourism association, or the Ministry of the Environment.",
   "nav.about": "About This Site",
   "lang.ja": "日本語",
