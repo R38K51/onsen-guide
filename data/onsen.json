@@ -1,0 +1,722 @@
+{
+ "reviewedAt": "2026-11-22",
+ "areas": [
+  {
+   "id": "noboribetsu",
+   "nameJa": "登別温泉",
+   "nameKana": "のぼりべつ",
+   "nameRoman": "Noboribetsu Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "一般社団法人 登別国際観光コンベンション協会",
+    "title": "温泉と宿について",
+    "url": "https://noboribetsu-spa.jp/faq/onsen-stay/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "食塩泉（塩化物泉）",
+     "type": "chloride",
+     "matchedName": "食塩泉",
+     "basis": "structure",
+     "note": "旧名の食塩泉は対照表で塩化物泉。括弧内も塩化物泉"
+    },
+    {
+     "official": "明ばん泉（含アルミニウム泉）",
+     "type": "aluminum",
+     "matchedName": "アルミニウム・鉄（Ⅱ）－硫酸塩泉",
+     "basis": "structure",
+     "note": "括弧内の掲示用泉質名が含アルミニウム泉。対照表の aluminum の行と同じ分類"
+    },
+    {
+     "official": "芒硝泉（硫酸塩泉）",
+     "type": "sulfate",
+     "matchedName": "芒硝泉",
+     "basis": "structure",
+     "note": "旧名の芒硝泉は対照表で硫酸塩泉。括弧内も硫酸塩泉"
+    },
+    {
+     "official": "鉄泉（含鉄泉）",
+     "type": "iron",
+     "matchedName": "鉄泉",
+     "basis": "structure",
+     "note": "旧名の鉄泉は対照表で iron。括弧内も含鉄泉"
+    },
+    {
+     "official": "酸性泉",
+     "type": "acid",
+     "matchedName": "酸性泉",
+     "basis": "table"
+    },
+    {
+     "official": "重曹泉",
+     "type": "bicarbonate",
+     "matchedName": "重曹泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "jozankei",
+   "nameJa": "定山渓温泉",
+   "nameKana": "じょうざんけい",
+   "nameRoman": "Jozankei Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "北海道観光機構",
+    "title": "定山渓温泉",
+    "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10613.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+    }
+   ]
+  },
+  {
+   "id": "kawayu",
+   "nameJa": "川湯温泉",
+   "nameKana": "かわゆ",
+   "nameRoman": "Kawayu Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "北海道観光機構",
+    "title": "川湯温泉",
+    "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10610.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+    },
+    {
+     "official": "硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "硫酸塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "酸性泉",
+     "type": "acid",
+     "matchedName": "酸性泉",
+     "basis": "table"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "sounkyo",
+   "nameJa": "層雲峡温泉",
+   "nameKana": "そううんきょう",
+   "nameRoman": "Sounkyo Onsen",
+   "prefecture": "hokkaido",
+   "source": {
+    "publisher": "北海道観光機構",
+    "title": "層雲峡温泉",
+    "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10611.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "naruko",
+   "nameJa": "鳴子温泉郷",
+   "nameKana": "なるこ",
+   "nameRoman": "Naruko Onsen",
+   "prefecture": "miyagi",
+   "source": {
+    "publisher": "鳴子温泉郷観光協会",
+    "title": "温泉",
+    "url": "https://www.naruko.gr.jp/%E6%B8%A9%E6%B3%89/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+    },
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+    },
+    {
+     "official": "硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "硫酸塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "含鉄泉",
+     "type": "iron",
+     "matchedName": "鉄泉",
+     "basis": "structure",
+     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "酸性泉",
+     "type": "acid",
+     "matchedName": "酸性泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "zao",
+   "nameJa": "蔵王温泉",
+   "nameKana": "ざおう",
+   "nameRoman": "Zao Onsen",
+   "prefecture": "yamagata",
+   "source": {
+    "publisher": "蔵王温泉観光協会",
+    "title": "蔵王温泉とは",
+    "url": "https://zaomountainresort.com/about/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "iizaka",
+   "nameJa": "飯坂温泉",
+   "nameKana": "いいざか",
+   "nameRoman": "Iizaka Onsen",
+   "prefecture": "fukushima",
+   "source": {
+    "publisher": "一般社団法人 福島市観光コンベンション協会",
+    "title": "飯坂温泉・穴原温泉（観光スポット）",
+    "url": "https://www.f-kankou.jp/spot/34311",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "弱アルカリ性単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "structure",
+     "note": "対照表の単純温泉に「弱アルカリ性」が付いた形。陰イオン・陽イオンの主成分の記載なし"
+    }
+   ]
+  },
+  {
+   "id": "nasu",
+   "nameJa": "那須温泉郷",
+   "nameKana": "なす",
+   "nameRoman": "Nasu Onsen",
+   "prefecture": "tochigi",
+   "source": {
+    "publisher": "一般社団法人 那須町観光協会",
+    "title": "那須の温泉",
+    "url": "https://www.nasukogen.org/nasuonsen/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "単純泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "structure",
+     "note": "「単純泉」は単純温泉の略した書き方"
+    },
+    {
+     "official": "アルカリ性単純泉",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
+     "basis": "structure",
+     "note": "「単純泉」は単純温泉の略した書き方。アルカリ性単純温泉の行と同じ分類"
+    },
+    {
+     "official": "ナトリウム－塩化物温泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "末尾が「泉」でなく「温泉」だけの違い"
+    }
+   ]
+  },
+  {
+   "id": "isobe",
+   "nameJa": "磯部温泉",
+   "nameKana": "いそべ",
+   "nameRoman": "Isobe Onsen",
+   "prefecture": "gunma",
+   "source": {
+    "publisher": "安中市",
+    "title": "磯部温泉",
+    "url": "https://www.city.annaka.lg.jp/page/2033.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "ナトリウム−塩化物・炭酸水素塩強塩温泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物・炭酸水素塩泉",
+     "basis": "structure",
+     "note": "対照表の塩化物・炭酸水素塩泉の行に従い塩化物泉（強塩は塩化物の強塩泉の区分）。区切りの記号と末尾の「温泉」だけが違う"
+    }
+   ]
+  },
+  {
+   "id": "hakone",
+   "nameJa": "箱根温泉",
+   "nameKana": "はこね",
+   "nameRoman": "Hakone Onsen",
+   "prefecture": "kanagawa",
+   "source": {
+    "publisher": "一般財団法人 箱根町観光協会",
+    "title": "箱根十七湯",
+    "url": "https://www.hakone.or.jp/6882",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "アルカリ性単純温泉",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "食塩泉（ナトリウム－塩化物泉）",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "旧名の食塩泉と括弧内のナトリウム－塩化物泉は、どちらも対照表で塩化物泉"
+    },
+    {
+     "official": "石膏泉（カルシウム－硫酸泉）",
+     "type": "sulfate",
+     "matchedName": "石膏泉",
+     "basis": "structure",
+     "note": "旧名の石膏泉は対照表で硫酸塩泉。括弧内は陰イオンが硫酸"
+    }
+   ]
+  },
+  {
+   "id": "yamanaka",
+   "nameJa": "山中温泉",
+   "nameKana": "やまなか",
+   "nameRoman": "Yamanaka Onsen",
+   "prefecture": "ishikawa",
+   "source": {
+    "publisher": "加賀市観光情報センター",
+    "title": "初めての加賀温泉郷",
+    "url": "https://www.tabimati.net/feature/detail_3.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "カルシウム・ナトリウム一硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "カルシウム－硫酸塩泉",
+     "basis": "structure",
+     "note": "原文は区切りが漢字の「一」。陽イオンが2つで、陰イオンは硫酸塩だけ。対照表の硫酸塩泉に当たる"
+    }
+   ]
+  },
+  {
+   "id": "nozawa",
+   "nameJa": "野沢温泉",
+   "nameKana": "のざわ",
+   "nameRoman": "Nozawa Onsen",
+   "prefecture": "nagano",
+   "source": {
+    "publisher": "野沢温泉マウンテンリゾート観光局",
+    "title": "野沢温泉 外湯めぐりガイド｜13ヶ所の温泉マップ",
+    "url": "https://nozawakanko.jp/hotspring/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "単純硫黄泉",
+     "type": "sulfur",
+     "matchedName": "単純硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "含硫黄-ナトリウム・カルシウム-硫酸塩泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "structure",
+     "note": "冠の「含硫黄－」は対照表で硫黄泉の行に従う（設計書の振り分け規則4）"
+    }
+   ]
+  },
+  {
+   "id": "gero",
+   "nameJa": "下呂温泉",
+   "nameKana": "げろ",
+   "nameRoman": "Gero Onsen",
+   "prefecture": "gifu",
+   "source": {
+    "publisher": "一般社団法人 下呂温泉観光協会",
+    "title": "下呂温泉を知る｜日本三名泉を楽しもう",
+    "url": "https://www.gero-spa.com/onsen/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "単純温泉（アルカリ性単純温泉）",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
+     "basis": "structure",
+     "note": "全体は対照表にない書き方。括弧内の名前が対照表と一致"
+    }
+   ]
+  },
+  {
+   "id": "kinosaki",
+   "nameJa": "城崎温泉",
+   "nameKana": "きのさき",
+   "nameRoman": "Kinosaki Onsen",
+   "prefecture": "hyogo",
+   "source": {
+    "publisher": "城崎温泉観光協会",
+    "title": "外湯",
+    "url": "https://kinosaki-spa.gr.jp/about/spa/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "ナトリウム・カルシウム-塩化物・高温泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "陽イオンが2つで、陰イオンは塩化物だけ（原文の「塩化物・高温泉」は泉質の区分の書き方）"
+    }
+   ]
+  },
+  {
+   "id": "arima",
+   "nameJa": "有馬温泉",
+   "nameKana": "ありま",
+   "nameRoman": "Arima Onsen",
+   "prefecture": "hyogo",
+   "source": {
+    "publisher": "有馬温泉観光協会",
+    "title": "泉質",
+    "url": "https://www.arima-onsen.com/about/spring_quality",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "単純性温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "structure",
+     "note": "「単純性温泉」は単純温泉の書き方の違い"
+    },
+    {
+     "official": "二酸化炭素泉",
+     "type": "co2",
+     "matchedName": "単純二酸化炭素泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。対照表の二酸化炭素泉の行と同じ分類"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+    },
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+    },
+    {
+     "official": "硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "硫酸塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "含鉄泉",
+     "type": "iron",
+     "matchedName": "鉄泉",
+     "basis": "structure",
+     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+    },
+    {
+     "official": "放射能泉",
+     "type": "radioactive",
+     "matchedName": "放射能泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "shirahama",
+   "nameJa": "白浜温泉",
+   "nameKana": "しらはま",
+   "nameRoman": "Shirahama Onsen",
+   "prefecture": "wakayama",
+   "source": {
+    "publisher": "南紀白浜観光協会",
+    "title": "源泉豊富な南紀白浜",
+    "url": "https://www.nankishirahama.jp/feature/1989/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "ナトリウム塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い"
+    },
+    {
+     "official": "含硫黄ナトリウム塩化物泉",
+     "type": "sulfur",
+     "matchedName": "含硫黄－ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。冠の「含硫黄－」は硫黄泉の行に従う"
+    },
+    {
+     "official": "ナトリウム塩化物炭酸水素塩泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物・炭酸水素塩泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。対照表では塩化物泉の行"
+    }
+   ]
+  },
+  {
+   "id": "misasa",
+   "nameJa": "三朝温泉",
+   "nameKana": "みささ",
+   "nameRoman": "Misasa Onsen",
+   "prefecture": "tottori",
+   "source": {
+    "publisher": "三朝温泉観光協会",
+    "title": "三朝温泉の効能と歴史",
+    "url": "https://misasaonsen.jp/about",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "含放射能/ナトリウム・塩化物泉",
+     "type": "radioactive",
+     "matchedName": "含放射能－○－○泉",
+     "basis": "structure",
+     "note": "冠の「含放射能－」は対照表で放射能泉の行に従う。区切りが「/」"
+    },
+    {
+     "official": "含放射能/単純泉",
+     "type": "radioactive",
+     "matchedName": "含放射能－○－○泉",
+     "basis": "structure",
+     "note": "冠の「含放射能－」は対照表で放射能泉の行に従う。区切りが「/」"
+    }
+   ]
+  },
+  {
+   "id": "tamatsukuri",
+   "nameJa": "玉造温泉",
+   "nameKana": "たまつくり",
+   "nameRoman": "Tamatsukuri Onsen",
+   "prefecture": "shimane",
+   "source": {
+    "publisher": "公益社団法人 島根県観光連盟",
+    "title": "玉造温泉",
+    "url": "https://www.kankou-shimane.com/spa/detail/08_tamatsukuri",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "ナトリウム・カルシウム－硫酸塩・塩化物泉",
+     "type": "sulfate",
+     "matchedName": "カルシウム・ナトリウム－硫酸塩・塩化物泉",
+     "basis": "structure",
+     "note": "陽イオンの並びだけが対照表と違う。対照表では硫酸塩泉の行"
+    }
+   ]
+  },
+  {
+   "id": "dogo",
+   "nameJa": "道後温泉",
+   "nameKana": "どうご",
+   "nameRoman": "Dogo Onsen",
+   "prefecture": "ehime",
+   "source": {
+    "publisher": "松山市",
+    "title": "温泉の成分、禁忌症、適応症など",
+    "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/kankomeisho/dogoonsen/info/seibun.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "アルカリ性単純温泉",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "unzen",
+   "nameJa": "雲仙温泉",
+   "nameKana": "うんぜん",
+   "nameRoman": "Unzen Onsen",
+   "prefecture": "nagasaki",
+   "source": {
+    "publisher": "雲仙温泉観光協会",
+    "title": "雲仙の泉質・効能",
+    "url": "https://unzenonsen.unzen.org/principle/",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "酸性硫化水素泉",
+     "type": "sulfur",
+     "matchedName": "酸性硫化水素泉",
+     "basis": "table"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    }
+   ]
+  },
+  {
+   "id": "beppu",
+   "nameJa": "別府温泉",
+   "nameKana": "べっぷ",
+   "nameRoman": "Beppu Onsen",
+   "prefecture": "oita",
+   "source": {
+    "publisher": "別府市",
+    "title": "温泉百科 温泉データ",
+    "url": "https://www.city.beppu.oita.jp/sangyou/onsen/detail4.html",
+    "checkedAt": "2026-11-22"
+   },
+   "springs": [
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "basis": "structure",
+     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+    },
+    {
+     "official": "硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "硫酸塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "含鉄泉",
+     "type": "iron",
+     "matchedName": "鉄泉",
+     "basis": "structure",
+     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "酸性泉",
+     "type": "acid",
+     "matchedName": "酸性泉",
+     "basis": "table"
+    }
+   ]
+  }
+ ]
+}
