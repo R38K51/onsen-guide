@@ -23,8 +23,14 @@ function navigate(patch) {
   location.hash = buildHash({ ...current, ...patch });
 }
 
+let scrollToResult = false;
+
 const actions = {
-  onToggleType: (id) => navigate({ route: "home", type: current.type === id ? null : id }),
+  onToggleType: (id) => {
+    // 札を選んだとき（解除ではないとき）、1列の配置なら結果までスクロールする
+    scrollToResult = current.type !== id;
+    navigate({ route: "home", type: current.type === id ? null : id });
+  },
   onPref: (pref) => navigate({ route: "home", pref }),
   onClear: () => navigate({ route: "home", type: null, pref: null }),
   onReload: () => location.reload(),
@@ -64,11 +70,25 @@ function render() {
     fitSticky();
   }
 
+  if (scrollToResult && parsed.route === "home") {
+    scrollToResult = false;
+    revealResult();
+  }
+
   renderFooter(document.getElementById("footer"), { lang, status, data, formatDate });
 
   // 画面の移動（A と B）のときだけ、見出しにフォーカスを移す。絞り込みでは動かさない
   if (lastRoute !== null && lastRoute !== parsed.route) view.heading.focus();
   lastRoute = parsed.route;
+}
+
+// 1列の配置（1280px 未満）では、説明パネル（なければ結果の見出し）の先頭までスクロールする。フォーカスは動かさない
+function revealResult() {
+  if (window.matchMedia("(min-width: 1280px)").matches) return;
+  const target = document.querySelector(".results .panel") ?? document.getElementById("results-heading");
+  if (!target || target.hidden) return;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  target.scrollIntoView({ block: "start", behavior: reduce ? "instant" : "smooth" });
 }
 
 // 左の列が画面の高さより高いときは固定をやめて流す（入れ子のスクロールを作らない）

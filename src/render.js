@@ -58,17 +58,17 @@ function numberFormat() {
 
 // 外部リンク（新しいタブ）。矢印は飾り
 function externalLink(href, className, ...labelNodes) {
-  // 矢印だけが次の行に落ちないよう、最後の1文字と矢印を折り返さない1組にする
+  // 矢印だけが次の行に落ちないよう、最後の区切り（「、」か「, 」）より後ろと矢印を折り返さない1組にする
   const last = labelNodes[labelNodes.length - 1];
   const head = labelNodes.slice(0, -1);
-  let tail = [last];
+  let tail = [];
   if (typeof last === "string" && last.length > 0) {
-    const chars = Array.from(last);
-    head.push(chars.slice(0, -1).join(""));
-    tail = [chars[chars.length - 1]];
+    const cut = Math.max(last.lastIndexOf("、"), last.lastIndexOf(", "));
+    const at = cut >= 0 ? cut + (last[cut] === "、" ? 1 : 2) : Math.max(0, last.length - 1);
+    head.push(last.slice(0, at));
+    tail = [last.slice(at)];
   } else {
     head.push(last);
-    tail = [];
   }
   return el(
     "a",

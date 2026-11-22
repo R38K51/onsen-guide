@@ -215,6 +215,8 @@ svg.icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentCol
 .panel .alt-name { margin: 0 0 var(--space-2); color: var(--color-text-muted); }
 .panel .small { font-size: var(--text-sm); color: var(--color-text-muted); }
 .panel .notice { margin-bottom: var(--space-2); }
+.panel .notice p, .home-notes p { text-wrap: pretty; }
+.panel, #results-heading { scroll-margin-top: var(--space-3); }
 
 .cards {
   list-style: none;
@@ -280,7 +282,7 @@ svg.icon { width: 14px; height: 14px; flex: none; fill: none; stroke: currentCol
 @media (min-width: 1280px) {
   .home { display: grid; grid-template-columns: 320px minmax(0, 1fr); column-gap: var(--space-6); align-items: start; }
   .home-head { grid-column: 1 / -1; }
-  .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 0; }
+  .chips { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: var(--space-3); }
   .filters { grid-column: 1; }
   .results { grid-column: 2; }
   .results .panel:first-child { margin-top: 0; }

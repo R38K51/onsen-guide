@@ -364,3 +364,29 @@ test.describe("幅 390 の最初の画面", () => {
     expect(visible.chips).toBeGreaterThanOrEqual(4);
   });
 });
+
+for (const lang of LANGS) {
+  test.describe(`幅 390 で札を押した後（${lang}）`, () => {
+    test.use({ viewport: { width: 390, height: 844 } });
+    test("説明パネルがビューポートに入り、フォーカスは札のまま", async ({ page }) => {
+      await openApp(page, `#/?lang=${lang}`);
+      await waitReady(page);
+      await page.emulateMedia({ reducedMotion: "reduce" });
+      const chip = page.locator("button.chip").nth(0);
+      await chip.click();
+      const panel = page.locator("section.panel");
+      await expect(panel).toBeVisible();
+      await expect
+        .poll(() => page.evaluate(() => {
+          const r = document.querySelector("section.panel").getBoundingClientRect();
+          return r.top >= 0 && r.top < window.innerHeight - 100;
+        }))
+        .toBe(true);
+      await expect(chip).toBeFocused();
+      const y = await page.evaluate(() => window.scrollY);
+      await chip.click();
+      await expect(panel).toHaveCount(0);
+      expect(await page.evaluate(() => window.scrollY)).toBeLessThanOrEqual(y);
+    });
+  });
+}
