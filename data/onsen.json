@@ -23,30 +23,31 @@
     {
      "official": "食塩泉（塩化物泉）",
      "type": "chloride",
-     "matchedName": "食塩泉",
+     "matchedName": "塩化物泉",
      "basis": "structure",
-     "note": "旧名の食塩泉は対照表で塩化物泉。括弧内も塩化物泉"
+     "note": "括弧内が現行の掲示用泉質名の塩化物泉。旧名の食塩泉も、改訂前の資料で塩化物泉"
     },
     {
      "official": "明ばん泉（含アルミニウム泉）",
-     "type": "aluminum",
-     "matchedName": "アルミニウム・鉄（Ⅱ）－硫酸塩泉",
-     "basis": "structure",
-     "note": "括弧内の掲示用泉質名が含アルミニウム泉。対照表の aluminum の行と同じ分類"
+     "note": "括弧内の「含アルミニウム泉」は、現行の10種類（掲示用泉質名）にない。どれにも入れず、原文だけ載せる"
     },
     {
      "official": "芒硝泉（硫酸塩泉）",
      "type": "sulfate",
-     "matchedName": "芒硝泉",
+     "matchedName": "硫酸塩泉",
      "basis": "structure",
-     "note": "旧名の芒硝泉は対照表で硫酸塩泉。括弧内も硫酸塩泉"
+     "note": "括弧内が現行の掲示用泉質名の硫酸塩泉。旧名の芒硝泉も、改訂前の資料で硫酸塩泉"
+    },
+    {
+     "official": "緑ばん泉（含アルミニウム泉）",
+     "note": "括弧内の「含アルミニウム泉」は、現行の10種類にない。ページには「陰イオンが硫酸イオン、陽イオンは鉄が主成分」とあるが、名前の括弧書きと合わないため、どれにも入れず、原文だけ載せる"
     },
     {
      "official": "鉄泉（含鉄泉）",
      "type": "iron",
-     "matchedName": "鉄泉",
+     "matchedName": "含鉄泉",
      "basis": "structure",
-     "note": "旧名の鉄泉は対照表で iron。括弧内も含鉄泉"
+     "note": "括弧内が現行の掲示用泉質名の含鉄泉。旧名の鉄泉も、改訂前の資料で含鉄泉"
     },
     {
      "official": "酸性泉",
@@ -59,6 +60,10 @@
      "type": "bicarbonate",
      "matchedName": "重曹泉",
      "basis": "table"
+    },
+    {
+     "official": "ラジウム泉",
+     "note": "「ラジウム泉」は、現行の分類にも改訂前の資料にもない名前。ページには「主体はラドンとトロン」とあるが、名前から放射能泉と決められないため、どれにも入れず、原文だけ載せる"
     }
    ]
   },
@@ -78,16 +83,21 @@
     {
      "official": "塩化物泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+     "matchedName": "塩化物泉",
+     "basis": "table"
     },
     {
      "official": "炭酸水素塩泉",
      "type": "bicarbonate",
-     "matchedName": "ナトリウム－炭酸水素塩泉",
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "ナトリウム塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
      "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+     "note": "区切りの記号がないだけの違い"
     }
    ]
   },
@@ -107,9 +117,8 @@
     {
      "official": "塩化物泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+     "matchedName": "塩化物泉",
+     "basis": "table"
     },
     {
      "official": "硫酸塩泉",
@@ -128,6 +137,13 @@
      "type": "sulfur",
      "matchedName": "硫黄泉",
      "basis": "table"
+    },
+    {
+     "official": "含鉄泉（飲用）",
+     "type": "iron",
+     "matchedName": "含鉄泉",
+     "basis": "structure",
+     "note": "ページの泉質の一覧にある「含鉄泉（飲用）」。括弧は飲用の区分で、泉質名は含鉄泉"
     }
    ]
   },
@@ -147,9 +163,8 @@
     {
      "official": "炭酸水素塩泉",
      "type": "bicarbonate",
-     "matchedName": "ナトリウム－炭酸水素塩泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
     },
     {
      "official": "硫黄泉",
@@ -187,16 +202,14 @@
     {
      "official": "炭酸水素塩泉",
      "type": "bicarbonate",
-     "matchedName": "ナトリウム－炭酸水素塩泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
     },
     {
      "official": "塩化物泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+     "matchedName": "塩化物泉",
+     "basis": "table"
     },
     {
      "official": "硫酸塩泉",
@@ -207,9 +220,8 @@
     {
      "official": "含鉄泉",
      "type": "iron",
-     "matchedName": "鉄泉",
-     "basis": "structure",
-     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+     "matchedName": "含鉄泉",
+     "basis": "table"
     },
     {
      "official": "硫黄泉",
@@ -264,7 +276,14 @@
      "type": "simple",
      "matchedName": "単純温泉",
      "basis": "structure",
-     "note": "対照表の単純温泉に「弱アルカリ性」が付いた形。陰イオン・陽イオンの主成分の記載なし"
+     "note": "単純温泉に液性の「弱アルカリ性」が付いた形（指針3ページの1-2(2)の区分）"
+    },
+    {
+     "official": "アルカリ性単純泉",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
+     "basis": "structure",
+     "note": "「単純泉」は単純温泉の略した書き方"
     }
    ]
   },
@@ -299,7 +318,7 @@
      "type": "simple",
      "matchedName": "アルカリ性単純温泉",
      "basis": "structure",
-     "note": "「単純泉」は単純温泉の略した書き方。アルカリ性単純温泉の行と同じ分類"
+     "note": "「単純泉」は単純温泉の略した書き方"
     },
     {
      "official": "ナトリウム－塩化物温泉",
@@ -307,6 +326,17 @@
      "matchedName": "ナトリウム－塩化物泉",
      "basis": "structure",
      "note": "末尾が「泉」でなく「温泉」だけの違い"
+    },
+    {
+     "official": "ナトリウム塩化物泉（弱アルカリ性高温泉）",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。括弧内は液性と泉温の区分（指針3ページの1-2）"
+    },
+    {
+     "official": "含硫酸塩硫化水素泉",
+     "note": "旧名の「硫化水素泉」に「含硫酸塩」が付いた形で、改訂前の資料の名前（硫酸塩硫化水素泉）とも一致しない。現行の10種類の名前にも、旧名の対応にも当たらないため、どれにも入れず、原文だけ載せる"
     }
    ]
   },
@@ -326,9 +356,9 @@
     {
      "official": "ナトリウム−塩化物・炭酸水素塩強塩温泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物・炭酸水素塩泉",
+     "matchedName": "陽イオン名－塩化物（・副成分）泉",
      "basis": "structure",
-     "note": "対照表の塩化物・炭酸水素塩泉の行に従い塩化物泉（強塩は塩化物の強塩泉の区分）。区切りの記号と末尾の「温泉」だけが違う"
+     "note": "陰イオンの先頭が塩化物なので塩化物泉（指針4ページ、7ページ）。強塩は塩化物泉の区分。区切りの記号と末尾の「温泉」だけが違う"
     }
    ]
   },
@@ -356,14 +386,63 @@
      "type": "chloride",
      "matchedName": "ナトリウム－塩化物泉",
      "basis": "structure",
-     "note": "旧名の食塩泉と括弧内のナトリウム－塩化物泉は、どちらも対照表で塩化物泉"
+     "note": "括弧内が指針の名前。旧名の食塩泉も、改訂前の資料で塩化物泉"
     },
     {
      "official": "石膏泉（カルシウム－硫酸泉）",
      "type": "sulfate",
-     "matchedName": "石膏泉",
+     "matchedName": "カルシウム－硫酸塩泉",
      "basis": "structure",
-     "note": "旧名の石膏泉は対照表で硫酸塩泉。括弧内は陰イオンが硫酸"
+     "note": "括弧内は「塩」が抜けた書き方で、指針のカルシウム－硫酸塩泉。旧名の石膏泉も、改訂前の資料で硫酸塩泉"
+    },
+    {
+     "official": "酸性硫酸塩泉",
+     "type": "acid",
+     "matchedName": "酸性－○－○泉",
+     "basis": "structure",
+     "note": "名前の始めの「酸性」は、指針の「酸性－」（水素イオンを含む塩類泉。6ページ）に当たる"
+    },
+    {
+     "official": "酸性硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "硫酸塩泉",
+     "basis": "structure",
+     "note": "名前の終わりが硫酸塩泉"
+    },
+    {
+     "official": "重炭酸塩硫酸塩泉",
+     "note": "「重炭酸塩」は現行の指針にない言い方（現行は炭酸水素塩）。現行の10種類の名前にも、旧名の対応にも当たらないため、どれにも入れず、原文だけ載せる"
+    },
+    {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "塩化物泉",
+     "basis": "table"
+    },
+    {
+     "official": "塩化物重炭酸塩硫酸塩泉（混合型）",
+     "type": "chloride",
+     "matchedName": "陽イオン名－塩化物（・副成分）泉",
+     "basis": "structure",
+     "note": "陰イオンの先頭が塩化物なので塩化物泉（指針4ページ、7ページ）。括弧内の「混合型」はページの説明"
+    },
+    {
+     "official": "弱食塩泉",
+     "type": "chloride",
+     "matchedName": "弱食塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
     }
    ]
   },
@@ -383,9 +462,9 @@
     {
      "official": "カルシウム・ナトリウム一硫酸塩泉",
      "type": "sulfate",
-     "matchedName": "カルシウム－硫酸塩泉",
+     "matchedName": "陽イオン名－硫酸塩（・副成分）泉",
      "basis": "structure",
-     "note": "原文は区切りが漢字の「一」。陽イオンが2つで、陰イオンは硫酸塩だけ。対照表の硫酸塩泉に当たる"
+     "note": "原文は区切りが漢字の「一」。陰イオンは硫酸塩だけ"
     }
    ]
   },
@@ -405,15 +484,27 @@
     {
      "official": "単純硫黄泉",
      "type": "sulfur",
-     "matchedName": "単純硫黄泉",
-     "basis": "table"
+     "matchedName": "単純硫黄温泉",
+     "basis": "structure",
+     "note": "「温」が抜けた書き方で、指針の単純硫黄温泉（6ページ）に当たる"
     },
     {
      "official": "含硫黄-ナトリウム・カルシウム-硫酸塩泉",
      "type": "sulfur",
-     "matchedName": "硫黄泉",
+     "matchedName": "含硫黄－○－○泉",
      "basis": "structure",
-     "note": "冠の「含硫黄－」は対照表で硫黄泉の行に従う（設計書の振り分け規則4）"
+     "note": "名前の始めの「含硫黄」は、指針の特殊成分の冠（7ページ）"
+    },
+    {
+     "official": "含硫黄-ナトリウム・カルシウム-硫酸塩泉",
+     "type": "sulfate",
+     "matchedName": "陽イオン名－硫酸塩（・副成分）泉",
+     "basis": "structure",
+     "note": "陰イオンは硫酸塩だけ"
+    },
+    {
+     "official": "低張性アルカリ性冷鉱泉",
+     "note": "「冷鉱泉」は泉温25℃未満の区分で、液性と浸透圧の区分だけが書かれている（指針3ページ）。成分の名前がないため、どれにも入れず、原文だけ載せる"
     }
    ]
   },
@@ -435,7 +526,7 @@
      "type": "simple",
      "matchedName": "アルカリ性単純温泉",
      "basis": "structure",
-     "note": "全体は対照表にない書き方。括弧内の名前が対照表と一致"
+     "note": "全体は分類にない書き方。括弧内の名前が指針の名前と一致"
     }
    ]
   },
@@ -455,9 +546,9 @@
     {
      "official": "ナトリウム・カルシウム-塩化物・高温泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
+     "matchedName": "陽イオン名－塩化物（・副成分）泉",
      "basis": "structure",
-     "note": "陽イオンが2つで、陰イオンは塩化物だけ（原文の「塩化物・高温泉」は泉質の区分の書き方）"
+     "note": "陰イオンは塩化物だけ。原文の「高温泉」は泉温の区分（42℃以上。指針3ページの1-2）で、陰イオンの名前ではない"
     }
    ]
   },
@@ -484,23 +575,20 @@
     {
      "official": "二酸化炭素泉",
      "type": "co2",
-     "matchedName": "単純二酸化炭素泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。対照表の二酸化炭素泉の行と同じ分類"
+     "matchedName": "二酸化炭素泉",
+     "basis": "table"
     },
     {
      "official": "炭酸水素塩泉",
      "type": "bicarbonate",
-     "matchedName": "ナトリウム－炭酸水素塩泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
     },
     {
      "official": "塩化物泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+     "matchedName": "塩化物泉",
+     "basis": "table"
     },
     {
      "official": "硫酸塩泉",
@@ -511,14 +599,19 @@
     {
      "official": "含鉄泉",
      "type": "iron",
-     "matchedName": "鉄泉",
-     "basis": "structure",
-     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+     "matchedName": "含鉄泉",
+     "basis": "table"
     },
     {
      "official": "放射能泉",
      "type": "radioactive",
      "matchedName": "放射能泉",
+     "basis": "table"
+    },
+    {
+     "official": "含よう素泉",
+     "type": "iodine",
+     "matchedName": "含よう素泉",
      "basis": "table"
     }
    ]
@@ -537,6 +630,51 @@
    },
    "springs": [
     {
+     "official": "塩化物泉",
+     "type": "chloride",
+     "matchedName": "塩化物泉",
+     "basis": "table"
+    },
+    {
+     "official": "硫黄泉",
+     "type": "sulfur",
+     "matchedName": "硫黄泉",
+     "basis": "table"
+    },
+    {
+     "official": "炭酸水素塩泉",
+     "type": "bicarbonate",
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
+    },
+    {
+     "official": "単純温泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "table"
+    },
+    {
+     "official": "含硫黄ナトリウム塩化物泉",
+     "type": "sulfur",
+     "matchedName": "含硫黄－○－○泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。名前の始めの「含硫黄」は、指針の特殊成分の冠（7ページ）"
+    },
+    {
+     "official": "含硫黄ナトリウム塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。陰イオンは塩化物"
+    },
+    {
+     "official": "ナトリウム塩化物炭酸水素塩泉",
+     "type": "chloride",
+     "matchedName": "陽イオン名－塩化物（・副成分）泉",
+     "basis": "structure",
+     "note": "区切りの記号がないだけの違い。陰イオンの先頭が塩化物なので塩化物泉（指針4ページ、7ページ）"
+    },
+    {
      "official": "ナトリウム塩化物泉",
      "type": "chloride",
      "matchedName": "ナトリウム－塩化物泉",
@@ -544,18 +682,18 @@
      "note": "区切りの記号がないだけの違い"
     },
     {
-     "official": "含硫黄ナトリウム塩化物泉",
+     "official": "単純硫黄泉",
      "type": "sulfur",
-     "matchedName": "含硫黄－ナトリウム－塩化物泉",
+     "matchedName": "単純硫黄温泉",
      "basis": "structure",
-     "note": "区切りの記号がないだけの違い。冠の「含硫黄－」は硫黄泉の行に従う"
+     "note": "「温」が抜けた書き方で、指針の単純硫黄温泉（6ページ）に当たる"
     },
     {
-     "official": "ナトリウム塩化物炭酸水素塩泉",
-     "type": "chloride",
-     "matchedName": "ナトリウム－塩化物・炭酸水素塩泉",
+     "official": "アルカリ単純温泉",
+     "type": "simple",
+     "matchedName": "アルカリ性単純温泉",
      "basis": "structure",
-     "note": "区切りの記号がないだけの違い。対照表では塩化物泉の行"
+     "note": "「性」が抜けただけの違い"
     }
    ]
   },
@@ -577,14 +715,28 @@
      "type": "radioactive",
      "matchedName": "含放射能－○－○泉",
      "basis": "structure",
-     "note": "冠の「含放射能－」は対照表で放射能泉の行に従う。区切りが「/」"
+     "note": "名前の始めの「含放射能」は、指針の特殊成分の冠（7ページ）。区切りが「/」"
+    },
+    {
+     "official": "含放射能/ナトリウム・塩化物泉",
+     "type": "chloride",
+     "matchedName": "ナトリウム－塩化物泉",
+     "basis": "structure",
+     "note": "陰イオンは塩化物だけ。区切りが「/」"
     },
     {
      "official": "含放射能/単純泉",
      "type": "radioactive",
      "matchedName": "含放射能－○－○泉",
      "basis": "structure",
-     "note": "冠の「含放射能－」は対照表で放射能泉の行に従う。区切りが「/」"
+     "note": "名前の始めの「含放射能」は、指針の特殊成分の冠（7ページ）。区切りが「/」"
+    },
+    {
+     "official": "含放射能/単純泉",
+     "type": "simple",
+     "matchedName": "単純温泉",
+     "basis": "structure",
+     "note": "「単純泉」は単純温泉の略した書き方。指針7ページの例（含硫黄・弱放射能－アルカリ性単純温泉）のように、冠と単純温泉が並ぶ名前がある"
     }
    ]
   },
@@ -604,9 +756,9 @@
     {
      "official": "ナトリウム・カルシウム－硫酸塩・塩化物泉",
      "type": "sulfate",
-     "matchedName": "カルシウム・ナトリウム－硫酸塩・塩化物泉",
+     "matchedName": "陽イオン名－硫酸塩（・副成分）泉",
      "basis": "structure",
-     "note": "陽イオンの並びだけが対照表と違う。対照表では硫酸塩泉の行"
+     "note": "陰イオンの先頭が硫酸塩なので硫酸塩泉（指針4ページ、7ページ）"
     }
    ]
   },
@@ -646,9 +798,29 @@
    "springs": [
     {
      "official": "酸性硫化水素泉",
+     "type": "acid",
+     "matchedName": "酸性硫化水素泉",
+     "basis": "table"
+    },
+    {
+     "official": "酸性硫化水素泉",
      "type": "sulfur",
      "matchedName": "酸性硫化水素泉",
      "basis": "table"
+    },
+    {
+     "official": "酸性硫化水素泉",
+     "type": "sulfate",
+     "matchedName": "酸性硫化水素泉",
+     "basis": "table"
+    },
+    {
+     "official": "含硫化水素酸性みょうばん泉",
+     "note": "「みょうばん泉」は現行の10種類にない（含アルミニウム泉は現行にない）。どれにも入れず、原文だけ載せる"
+    },
+    {
+     "official": "緑ばん泉",
+     "note": "「緑ばん泉」は改訂前の資料で鉄（Ⅱ）－硫酸塩泉に当たるが、現行の指針の名前の形と決められない。どれにも入れず、原文だけ載せる"
     },
     {
      "official": "硫黄泉",
@@ -680,16 +852,14 @@
     {
      "official": "塩化物泉",
      "type": "chloride",
-     "matchedName": "ナトリウム－塩化物泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが塩化物"
+     "matchedName": "塩化物泉",
+     "basis": "table"
     },
     {
      "official": "炭酸水素塩泉",
      "type": "bicarbonate",
-     "matchedName": "ナトリウム－炭酸水素塩泉",
-     "basis": "structure",
-     "note": "掲示用泉質名そのもの。陰イオンが炭酸水素塩"
+     "matchedName": "炭酸水素塩泉",
+     "basis": "table"
     },
     {
      "official": "硫酸塩泉",
@@ -700,9 +870,8 @@
     {
      "official": "含鉄泉",
      "type": "iron",
-     "matchedName": "鉄泉",
-     "basis": "structure",
-     "note": "掲示用泉質名の含鉄泉。対照表の鉄泉と同じ分類"
+     "matchedName": "含鉄泉",
+     "basis": "table"
     },
     {
      "official": "硫黄泉",

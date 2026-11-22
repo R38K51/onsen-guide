@@ -159,9 +159,9 @@
    },
    "springs": [
     {
-     "official": "含アルミニウム泉",
-     "type": "aluminum",
-     "matchedName": "含アルミニウム泉",
+     "official": "含よう素泉",
+     "type": "iodine",
+     "matchedName": "含よう素泉",
      "basis": "table"
     }
    ]
@@ -180,10 +180,8 @@
    },
    "springs": [
     {
-     "official": "含銅－鉄泉",
-     "type": "copperIron",
-     "matchedName": "含銅－鉄泉",
-     "basis": "table"
+     "official": "テスト用の分類できない泉質名",
+     "note": "架空の行。10種類のどれにも入れず、原文だけ載せる"
     }
    ]
   },

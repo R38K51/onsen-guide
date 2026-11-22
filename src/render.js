@@ -8,8 +8,8 @@ const SVG_NS = "http://www.w3.org/2000/svg";
 
 // 外部の資料（環境省の2点。画面Bだけで使う）
 const MOE_REFS = [
-  { key: "classification", url: "https://www.env.go.jp/nature/onsen/point/ryoyo.pdf" },
-  { key: "table", url: "https://www.env.go.jp/nature/onsen/docs/senshitsumei.pdf" },
+  { key: "guideline", url: "https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf" },
+  { key: "notice", url: "https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf" },
 ];
 
 export function el(tag, props = {}, ...children) {
@@ -96,7 +96,7 @@ function areaCard(area, selectedType) {
     el("h3", { lang: "ja", text: area.nameJa }),
     english ? el("p", { class: "roman", lang: "en", text: area.nameRoman }) : null,
     el("p", { class: "pref", text: t(`pref.${area.prefecture}`) }),
-    el("ul", { class: "tags" }, ...tags),
+    tags.length > 0 ? el("ul", { class: "tags" }, ...tags) : null,
     el(
       "p",
       { class: "official" },
@@ -298,7 +298,6 @@ export function createAboutView(status, data, formatDate) {
         t("about.ref.urlLabel"),
         externalLink(ref.url, "ref-link", ref.url, " ", t("about.ref.link")),
       ),
-      el("p", { text: t("about.ref.noYear") }),
     ),
   );
 

@@ -54,7 +54,7 @@ for (const size of SIZES) {
         await waitReady(page);
         expect(await overflowReport(page)).toEqual([]);
         expect(await smallTargets(page)).toEqual([]);
-        await page.locator("button.chip").nth(7).click(); // 長い名前の札（含銅－鉄泉）
+        await page.locator("button.chip").nth(9).click(); // 名前がいちばん長い札（放射能泉。英語は Radioactive spring (radon)）
         await expect(page.locator("section.panel")).toBeVisible();
         expect(await overflowReport(page)).toEqual([]);
         expect(await smallTargets(page)).toEqual([]);
@@ -105,7 +105,7 @@ for (const size of SIZES) {
         await openApp(page, `#/?lang=${lang}`);
         await waitReady(page);
         const chips = page.locator("button.chip");
-        await expect(chips).toHaveCount(11);
+        await expect(chips).toHaveCount(10);
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](10));
         await expect(page.locator("section.panel")).toHaveCount(0);
         await expect(page.getByRole("button", { name: lang === "ja" ? "条件を消す" : "Clear Filters" })).toBeHidden();
@@ -147,10 +147,20 @@ for (const size of SIZES) {
         await page.locator(".results .state-box button").click();
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](10));
 
-        await page.locator("button.chip").nth(10).click(); // 放射能泉：0件
+        await page.locator("button.chip").nth(9).click(); // 放射能泉：0件
         await expect(page.getByText(EMPTY_TITLE[lang])).toBeVisible();
         await expect(page.locator("section.panel")).toBeVisible();
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](0));
+      });
+
+      test("10種類に分類できない泉質名：公式ページの表記には出るが、タグにも札の件数にも出ない", async ({ page }) => {
+        await openApp(page, `#/?pref=oita&lang=${lang}`);
+        await waitReady(page);
+        const card = page.locator(".card", { hasText: "イータ温泉" });
+        await expect(card.locator(".official")).toContainText("テスト用の分類できない泉質名");
+        await expect(card.locator(".tags li")).toHaveCount(0);
+        await expect(card.locator("ul")).toHaveCount(0);
+        await expect(page.locator("button.chip")).toHaveCount(10);
       });
 
       test("URL の復元：直接開く、戻る、進む", async ({ page }) => {
@@ -161,15 +171,15 @@ for (const size of SIZES) {
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](1));
         await expect(page.locator("html")).toHaveAttribute("lang", lang);
 
-        await page.locator("button.chip").nth(1).click(); // 二酸化炭素泉
+        await page.locator("button.chip").nth(4).click(); // 二酸化炭素泉
         await expect(page.locator("button.chip").nth(8)).toHaveAttribute("aria-pressed", "false");
-        await expect(page.locator("button.chip").nth(1)).toHaveAttribute("aria-pressed", "true");
+        await expect(page.locator("button.chip").nth(4)).toHaveAttribute("aria-pressed", "true");
         await page.goBack();
         await expect(page.locator("button.chip").nth(8)).toHaveAttribute("aria-pressed", "true");
-        await expect(page.locator("button.chip").nth(1)).toHaveAttribute("aria-pressed", "false");
+        await expect(page.locator("button.chip").nth(4)).toHaveAttribute("aria-pressed", "false");
         await expect(page.locator("#results-heading")).toHaveText(HEADING[lang](1));
         await page.goForward();
-        await expect(page.locator("button.chip").nth(1)).toHaveAttribute("aria-pressed", "true");
+        await expect(page.locator("button.chip").nth(4)).toHaveAttribute("aria-pressed", "true");
       });
 
       test("不正な URL の値は無視して初期状態", async ({ page }) => {
@@ -228,7 +238,7 @@ for (const size of SIZES) {
         await waitReady(page);
         const kinds = [];
         let outline = "";
-        for (let i = 0; i < 18; i += 1) {
+        for (let i = 0; i < 17; i += 1) {
           await page.keyboard.press("Tab");
           const info = await page.evaluate(() => {
             const a = document.activeElement;
@@ -245,7 +255,7 @@ for (const size of SIZES) {
           kinds.push(info.kind);
           outline = info.outline;
         }
-        expect(kinds).toEqual(["skip", "site", "lang:ja", "lang:en", "about", ...Array(11).fill("chip"), "select", "link"]);
+        expect(kinds).toEqual(["skip", "site", "lang:ja", "lang:en", "about", ...Array(10).fill("chip"), "select", "link"]);
         expect(outline).toBe("3px");
 
         const first = page.locator("button.chip").first();
@@ -270,7 +280,7 @@ for (const size of SIZES) {
         await expect(switcher).toHaveAttribute("aria-pressed", "true");
         await expect(switcher).toBeFocused();
         await expect(page.locator("#results-heading")).toHaveText(HEADING[other](1));
-        await expect(page.locator("button.chip").nth(9)).toHaveAttribute("aria-pressed", "true");
+        await expect(page.locator("button.chip").nth(6)).toHaveAttribute("aria-pressed", "true"); // 酸性泉
         const title = await page.title();
         expect(title).toContain(other === "ja" ? "温泉探し" : "Onsen Finder");
       });
@@ -278,7 +288,7 @@ for (const size of SIZES) {
       test("読み込み中：200ms を超えたときだけ出る", async ({ page }) => {
         await openApp(page, `#/?lang=${lang}`, { delay: 1200 });
         await expect(page.getByRole("status")).toHaveText(lang === "ja" ? "読み込み中…" : "Loading…");
-        await expect(page.locator("button.chip")).toHaveCount(11);
+        await expect(page.locator("button.chip")).toHaveCount(10);
         await waitReady(page);
         await expect(page.getByRole("status")).toHaveCount(0);
       });
@@ -289,7 +299,7 @@ for (const size of SIZES) {
         const alert = page.getByRole("alert");
         await expect(alert).toBeVisible();
         await expect(alert.getByRole("button")).toHaveText(lang === "ja" ? "再読み込み" : "Reload");
-        await expect(page.locator("button.chip")).toHaveCount(11);
+        await expect(page.locator("button.chip")).toHaveCount(10);
         await expect(page.locator("section.panel")).toBeVisible();
         expect(await overflowReport(page)).toEqual([]);
       });
@@ -308,7 +318,7 @@ for (const size of SIZES) {
           await expect(link).toHaveAttribute("rel", "noopener noreferrer");
         }
         await page.goBack();
-        await expect(page.locator("button.chip")).toHaveCount(11);
+        await expect(page.locator("button.chip")).toHaveCount(10);
         await expect(page.locator("h1")).toBeFocused();
       });
 

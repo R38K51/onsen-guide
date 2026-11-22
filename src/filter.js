@@ -4,7 +4,7 @@ import { PREFECTURES } from "./prefectures.js";
 
 const collator = new Intl.Collator("ja");
 
-// 温泉地の泉質タグ（springs の type の重複を除き、対照表の順に並べる）
+// 温泉地の泉質タグ（springs の type の重複を除き、TYPE_IDS の順に並べる）
 export function areaTypes(area) {
   const set = new Set(area.springs.map((s) => s.type));
   return TYPE_IDS.filter((id) => set.has(id));

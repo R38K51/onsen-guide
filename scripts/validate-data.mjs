@@ -5,9 +5,10 @@ import { readFileSync, readdirSync, existsSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { dirname, join, relative } from "node:path";
 
+// 掲示用泉質名の10種類（通知の順。src/constants.js と同じ並び）
 export const TYPE_IDS = [
-  "simple", "co2", "bicarbonate", "chloride", "sulfate", "iron",
-  "aluminum", "copperIron", "sulfur", "acid", "radioactive",
+  "simple", "chloride", "bicarbonate", "sulfate", "co2",
+  "iron", "acid", "iodine", "sulfur", "radioactive",
 ];
 
 export const PREFECTURE_IDS = [
@@ -18,7 +19,14 @@ export const PREFECTURE_IDS = [
   "saga", "nagasaki", "kumamoto", "oita", "miyazaki", "kagoshima", "okinawa",
 ];
 
-const CLASSIFICATION_KEYS = ["label", "oldName", "name", "type", "page", "note"];
+// 対照表の行：name、type、source（出典の種別）、page（原本の紙面のページ）、current（旧名の行だけ。現行の名前）、note
+const CLASSIFICATION_KEYS = ["name", "type", "source", "page", "current", "note"];
+// 出典の種別ごとの、許すページの範囲（原本の紙面の番号）
+export const CLASSIFICATION_SOURCES = {
+  通知: [1, 7],
+  指針: [4, 7],
+  改訂前の資料: [1, 2],
+};
 const EMPTY_ALLOWED_KEYS = ["panel.criteria"];
 
 // 効能に読める語。否定の免責の言い回しだけ例外にする
@@ -32,8 +40,8 @@ const LIMIT_NUMBER = /\d[\d,.]*\s*(mg|μg|㎎|Bq|Ci|マッヘ|mache)|×\s*10|10�
 // src と index.html に置いてよい外部 URL（画面Bの環境省の2点と、SVG の名前空間）
 export const ALLOWED_URLS = [
   "http://www.w3.org/2000/svg",
-  "https://www.env.go.jp/nature/onsen/point/ryoyo.pdf",
-  "https://www.env.go.jp/nature/onsen/docs/senshitsumei.pdf",
+  "https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf",
+  "https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf",
 ];
 
 const FORBIDDEN_APIS = ["XMLHttpRequest", "WebSocket", "sendBeacon", "innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval("];
@@ -42,24 +50,27 @@ export function validateClassification(rows) {
   const errors = [];
   if (!Array.isArray(rows) || rows.length === 0) return ["classification: 配列でないか、空です"];
   const seenTypes = new Set();
+  const seenRows = new Set();
   rows.forEach((row, i) => {
     const at = `classification ${i + 1}件目`;
     if (row === null || typeof row !== "object") { errors.push(`${at}: 物ではありません`); return; }
     for (const key of Object.keys(row)) {
       if (!CLASSIFICATION_KEYS.includes(key)) errors.push(`${at}: 許可していない項目 ${key}`);
     }
-    for (const key of ["label", "oldName", "name"]) {
-      if (typeof row[key] !== "string") errors.push(`${at}: ${key} が文字ではありません`);
-    }
-    if (typeof row.label === "string" && row.label.trim() === "") errors.push(`${at}: label が空です`);
-    if (typeof row.oldName === "string" && row.oldName.trim() === "") errors.push(`${at}: oldName が空です`);
-    if (row.name === "" && !(typeof row.note === "string" && row.note !== "")) {
-      errors.push(`${at}: name が空で、note もありません（空欄の見出し行は note に理由を書く）`);
-    }
-    if (!TYPE_IDS.includes(row.type)) errors.push(`${at}: type が11種類のどれでもありません（${row.type}）`);
+    if (typeof row.name !== "string" || row.name.trim() === "") errors.push(`${at}: name が空です`);
+    if (!TYPE_IDS.includes(row.type)) errors.push(`${at}: type が10種類のどれでもありません（${row.type}）`);
     else seenTypes.add(row.type);
+    const range = CLASSIFICATION_SOURCES[row.source];
+    if (!range) errors.push(`${at}: source が通知、指針、改訂前の資料のどれでもありません（${row.source}）`);
     if (!Number.isInteger(row.page) || row.page < 1) errors.push(`${at}: page が1以上の整数ではありません`);
+    else if (range && (row.page < range[0] || row.page > range[1])) errors.push(`${at}: page が ${row.source} の範囲（${range[0]}〜${range[1]}）の外です`);
+    if (row.source === "改訂前の資料") {
+      if (typeof row.current !== "string" || row.current.trim() === "") errors.push(`${at}: 改訂前の資料の行には、現行の名前 current が要ります`);
+    } else if (row.current !== undefined) errors.push(`${at}: current は改訂前の資料の行だけに付けます`);
     if (row.note !== undefined && typeof row.note !== "string") errors.push(`${at}: note が文字ではありません`);
+    const key = `${row.source}|${row.name}|${row.type}`;
+    if (seenRows.has(key)) errors.push(`${at}: 同じ出典で同じ名前と種類の行が重複しています（${row.name}）`);
+    seenRows.add(key);
   });
   for (const id of TYPE_IDS) {
     if (!seenTypes.has(id)) errors.push(`classification: 泉質 ${id} の行がありません`);
@@ -69,6 +80,7 @@ export function validateClassification(rows) {
 
 const AREA_KEYS = ["id", "nameJa", "nameKana", "nameRoman", "prefecture", "source", "springs"];
 const SOURCE_KEYS = ["publisher", "title", "url", "checkedAt"];
+// type がない行は、10種類に分類できない泉質名（official と note だけ）
 const SPRING_KEYS = ["official", "type", "matchedName", "basis", "note"];
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -98,8 +110,12 @@ export function validateOnsen(data, classificationRows, today = new Date().toISO
   if (!isDate(data.reviewedAt)) errors.push("onsen: reviewedAt が日付（YYYY-MM-DD）ではありません");
   const n = data.areas.length;
   if (n < 20 || n > 30) errors.push(`onsen: 温泉地が ${n} 件です（20〜30件）`);
-  const known = new Set();
-  for (const r of classificationRows) { known.add(r.name); known.add(r.oldName); }
+  // 対照表の名前 → その名前の行がもつ type の集まり
+  const known = new Map();
+  for (const r of classificationRows) {
+    if (!known.has(r.name)) known.set(r.name, new Set());
+    known.get(r.name).add(r.type);
+  }
   const seen = { id: new Set(), nameJa: new Set(), url: new Set() };
   const dup = (kind, value, at) => {
     if (seen[kind].has(value)) errors.push(`${at}: ${kind} が重複しています（${value}）`);
@@ -135,14 +151,22 @@ export function validateOnsen(data, classificationRows, today = new Date().toISO
       if (sp === null || typeof sp !== "object") { errors.push(`${sat}: 物ではありません`); return; }
       for (const key of Object.keys(sp)) if (!SPRING_KEYS.includes(key)) errors.push(`${sat}: 許可していない項目 ${key}`);
       if (typeof sp.official !== "string" || sp.official.trim() === "") errors.push(`${sat}: official が空です`);
-      if (!TYPE_IDS.includes(sp.type)) errors.push(`${sat}: type が11種類のどれでもありません（${sp.type}）`);
+      if (sp.type === undefined) {
+        // 分類できない行：原文と理由だけ。type、matchedName、basis は付けない
+        if (typeof sp.note !== "string" || sp.note.trim() === "") errors.push(`${sat}: type がない行には、理由の note が要ります`);
+        for (const key of ["matchedName", "basis"]) {
+          if (sp[key] !== undefined) errors.push(`${sat}: type がない行に ${key} があります`);
+        }
+        return;
+      }
+      if (!TYPE_IDS.includes(sp.type)) errors.push(`${sat}: type が10種類のどれでもありません（${sp.type}）`);
       if (typeof sp.matchedName !== "string" || sp.matchedName.trim() === "") errors.push(`${sat}: matchedName が空です`);
+      else if (!known.has(sp.matchedName)) errors.push(`${sat}: matchedName が対照表にありません（${sp.matchedName}）`);
+      else if (!known.get(sp.matchedName).has(sp.type)) errors.push(`${sat}: matchedName の行の type と違います（${sp.matchedName}）`);
       if (sp.basis === "table") {
-        if (!known.has(sp.matchedName)) errors.push(`${sat}: basis が table だが matchedName が対照表にありません（${sp.matchedName}）`);
         if (sp.official !== sp.matchedName) errors.push(`${sat}: basis が table だが official と matchedName が違います`);
       } else if (sp.basis === "structure") {
         if (typeof sp.note !== "string" || sp.note.trim() === "") errors.push(`${sat}: basis が structure なのに note がありません`);
-        if (!known.has(sp.matchedName)) errors.push(`${sat}: matchedName が対照表にありません（${sp.matchedName}）`);
       } else errors.push(`${sat}: basis が table でも structure でもありません`);
     });
   });
@@ -235,25 +259,28 @@ export async function validateAll(root) {
 
   const notes = [];
   let areas = 0;
+  let counts = null;
   if (!existsSync(join(root, "data/onsen.json"))) notes.push("data/onsen.json はまだありません");
   else {
     const onsen = JSON.parse(readFileSync(join(root, "data/onsen.json"), "utf8"));
     errors.push(...validateOnsen(onsen, classification));
     areas = onsen.areas?.length ?? 0;
-    const empty = Object.entries(countByType(onsen)).filter(([, c]) => c === 0).map(([id]) => id);
-    if (empty.length > 0) notes.push(`0件の泉質（警告。提案4の判定待ち）: ${empty.join("、")}`);
+    counts = countByType(onsen);
+    const empty = Object.entries(counts).filter(([, c]) => c === 0).map(([id]) => id);
+    if (empty.length > 0) notes.push(`0件の泉質（警告）: ${empty.join("、")}`);
   }
-  return { errors, notes, classificationRows: classification.length, areas };
+  return { errors, notes, classificationRows: classification.length, areas, counts };
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-  const { errors, notes, classificationRows, areas } = await validateAll(root);
+  const { errors, notes, classificationRows, areas, counts } = await validateAll(root);
   for (const n of notes) console.log(`注: ${n}`);
   if (errors.length > 0) {
     for (const e of errors) console.error(`NG ${e}`);
     console.error(`${errors.length} 件のエラー`);
     process.exit(1);
   }
+  if (counts) console.log(`泉質ごとの温泉地の件数: ${TYPE_IDS.map((id) => `${id} ${counts[id]}`).join("、")}`);
   console.log(`OK 対照表 ${classificationRows} 行、温泉地 ${areas} 件、辞書、静的検査`);
 }

@@ -47,11 +47,18 @@ test("0件：当たる温泉地がない組み合わせ", () => {
   assert.deepEqual(filterAreas(areas, { type: "radioactive" }), []);
 });
 
-test("泉質タグは重複を除き、対照表の順", () => {
+test("種類に分類できない行はタグにも件数にも出ないが、公式ページの表記には出る", () => {
+  const eta = areas.find((a) => a.id === "eta");
+  assert.deepEqual(areaTypes(eta), []);
+  assert.deepEqual(officialNames(eta), ["テスト用の分類できない泉質名"]);
+  assert.equal(Object.values(countByType(areas)).reduce((a, b) => a + b, 0), 13);
+});
+
+test("泉質タグは重複を除き、10種類の順", () => {
   const alpha = areas.find((a) => a.id === "alpha");
   assert.deepEqual(areaTypes(alpha), ["chloride", "sulfate"]);
   const delta = areas.find((a) => a.id === "delta");
-  assert.deepEqual(areaTypes(delta), ["sulfur", "acid"]);
+  assert.deepEqual(areaTypes(delta), ["acid", "sulfur"]);
 });
 
 test("公式ページの表記は重複を除く", () => {
@@ -59,9 +66,10 @@ test("公式ページの表記は重複を除く", () => {
   assert.deepEqual(officialNames(alpha), ["ナトリウム－塩化物・硫酸塩泉"]);
 });
 
-test("札の件数は全件に対する件数（11種類すべてのキーがある）", () => {
+test("札の件数は全件に対する件数（10種類すべてのキーがある）", () => {
   const counts = countByType(areas);
-  assert.equal(Object.keys(counts).length, 11);
+  assert.equal(Object.keys(counts).length, 10);
+  assert.equal(counts.iodine, 1);
   assert.equal(counts.simple, 2);
   assert.equal(counts.sulfur, 2);
   assert.equal(counts.radioactive, 0);
