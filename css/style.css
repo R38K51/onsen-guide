@@ -1,0 +1,148 @@
+/* 温泉探し（仮称）：土台。画面の本実装は次の段階。 */
+:root {
+  /* 色（本文と地は4.5:1以上。実装後に dev-tester が実測する） */
+  --color-bg: #FBFAF6;            /* 地。紙の生成り */
+  --color-surface: #FFFFFF;       /* 札とカード */
+  --color-text: #1F2A2C;          /* 本文 */
+  --color-text-muted: #4A585A;    /* 補助。地の上で4.5:1以上 */
+  --color-primary: #0F5E63;       /* 湯の青緑。白字との組で4.5:1以上 */
+  --color-on-primary: #FFFFFF;
+  --color-primary-weak: #E3F0EF;  /* 選んだ種類のタグの地 */
+  --color-border: #D5DCD7;        /* 区切り線（飾り） */
+  --color-border-control: #6F7F81;/* 押せる札、選択欄の枠。地の上で3:1以上 */
+  --color-notice-bg: #FFF6E0;     /* 注意書き */
+  --color-notice-border: #B7791F;
+  --color-notice-text: #4D3000;
+  --color-focus: #0B4F8A;         /* フォーカスの輪。3px */
+
+  /* 文字（システム書体のみ） */
+  --font-body: "Hiragino Sans", "Yu Gothic UI", "Meiryo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Yu Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+  --text-xs: 12px;   /* 札の番号のみ */
+  --text-sm: 14px;
+  --text-md: 16px;   /* 本文の下限 */
+  --text-lg: 18px;   /* カードの見出し */
+  --text-xl: 26px;   /* h1（390）。768以上は 32px */
+  --leading-body: 1.7;
+  --leading-heading: 1.35;
+
+  /* 余白（4px 単位） */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 48px;
+
+  --radius: 4px;
+  --border-width: 1px;
+  --target-min: 44px;   /* 押せるものの最小の高さと幅 */
+  --container-max: 1120px;
+  --focus-ring: 3px solid var(--color-focus);
+  --motion-fast: 0.15s;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+/* 英語では見出しの明朝をゴシックに切り替える */
+html[lang="en"] { --font-heading: var(--font-body); }
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  overflow-wrap: anywhere;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  line-height: var(--leading-heading);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+h1 { font-size: var(--text-xl); }
+@media (min-width: 768px) { h1 { font-size: 32px; } }
+
+.page {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--space-4);
+}
+@media (min-width: 768px) { .page { padding: 0 var(--space-5); } }
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  min-height: 56px;
+  border-bottom: var(--border-width) solid var(--color-border);
+}
+.site-header > * { min-width: 0; }
+.site-name { font-family: var(--font-heading); font-weight: 700; margin-right: auto; }
+
+.lang-switch { display: flex; gap: var(--space-2); }
+
+button, select, .link-control {
+  min-height: var(--target-min);
+  min-width: var(--target-min);
+  touch-action: manipulation;
+  font: inherit;
+}
+button {
+  padding: 0 var(--space-3);
+  border: var(--border-width) solid var(--color-border-control);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background-color var(--motion-fast), color var(--motion-fast);
+}
+button[aria-pressed="true"] {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+  border-color: var(--color-primary);
+}
+
+.link-control {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-primary);
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-2);
+  top: -100px;
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-surface);
+  border: var(--border-width) solid var(--color-border-control);
+}
+.skip-link:focus { top: var(--space-2); }
+
+.unofficial { margin: var(--space-2) 0; font-size: var(--text-sm); color: var(--color-text-muted); }
+
+.notice {
+  background: var(--color-notice-bg);
+  color: var(--color-notice-text);
+  border-left: 4px solid var(--color-notice-border);
+  padding: var(--space-3) var(--space-4);
+}
+
+.site-footer {
+  margin-top: var(--space-7);
+  padding: var(--space-5) 0;
+  border-top: var(--border-width) solid var(--color-border);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button { transition-duration: 0s; }
+}

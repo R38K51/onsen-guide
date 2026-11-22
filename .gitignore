@@ -1,0 +1,11 @@
+node_modules/
+test-results/
+playwright-report/
+*.log
+.DS_Store
+Thumbs.db
+# 利用者データやバックアップ（この作品は保存しないが、念のため）
+*.bak
+*.backup
+.env
+.playwright-cli/
