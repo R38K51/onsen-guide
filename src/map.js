@@ -155,9 +155,7 @@ export function createMapView({ host, labels, onSelect, onStatus }) {
       scrollWheelZoom: false,
       boxZoom: false,
       attributionControl: false,
-      zoomControl: true,
-      zoomInTitle: labels.zoomIn,
-      zoomOutTitle: labels.zoomOut,
+      zoomControl: false, // 「＋」「－」は、下で辞書の文字を付けて足す
       minZoom: MAP_MIN_ZOOM,
       maxZoom: MAP_MAX_ZOOM,
       maxBounds: MAP_BOUNDS,
@@ -165,6 +163,7 @@ export function createMapView({ host, labels, onSelect, onStatus }) {
       keyboard: true,
     });
     map.setView([37.5, 138], MAP_MIN_ZOOM, { animate: false });
+    L.control.zoom({ position: "topleft", zoomInTitle: labels.zoomIn, zoomOutTitle: labels.zoomOut }).addTo(map);
     const container = map.getContainer();
     container.setAttribute("role", "region");
     container.setAttribute("aria-label", labels.label);
@@ -206,13 +205,18 @@ export function createMapView({ host, labels, onSelect, onStatus }) {
     });
     tileLayer.on("load", () => {
       // 見える範囲のタイルが終わって、成功が0で失敗がある：8秒を待たずに失敗にする
-      if (gen === generation && status === "loading" && tileLoaded === 0 && tileErrors > 0) fail();
+      // load のイベントの途中で地図を壊すと Leaflet が例外を出すので、1つあとに回す
+      if (gen === generation && status === "loading" && tileLoaded === 0 && tileErrors > 0) {
+        setTimeout(() => {
+          if (gen === generation && status === "loading" && tileLoaded === 0) fail();
+        }, 0);
+      }
     });
+    apply(); // 見える範囲を決めてからタイルを足す（最初に別のズームのタイルを取らない）
     tileLayer.addTo(map);
     timer = setTimeout(() => {
       if (gen === generation && status === "loading" && tileLoaded === 0) fail();
     }, MAP_TILE_TIMEOUT_MS);
-    apply();
   }
 
   function start() {

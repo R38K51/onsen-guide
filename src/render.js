@@ -248,7 +248,7 @@ function createMapPanel(actions) {
         pref: t(`pref.${area.prefecture}`),
       });
     } else {
-      hintText.textContent = `${t("map.hint.idle")} ${t("map.overlapHint")}`;
+      hintText.textContent = `${t("map.hint.idle")}${lang === "ja" ? "" : " "}${t("map.overlapHint")}`;
     }
     toCard.hidden = clearSelection.hidden = !area;
   }
@@ -323,7 +323,9 @@ function createMapPanel(actions) {
   return {
     root,
     // 結果から消えた温泉地の選択を外す（カードを作り直す前に呼ぶ）
-    syncSelection(shown) {
+    prepare(areas, shown) {
+      state.areas = areas;
+      state.numbers = pinNumbers(areas);
       if (state.selectedId && !shown.some((a) => a.id === state.selectedId && a.position)) {
         state.selectedId = null;
         actions.onSelectionChange?.(null);
@@ -336,9 +338,7 @@ function createMapPanel(actions) {
     setCards(shown, cards) {
       state.cards = new Map(shown.map((a, i) => [a.id, cards[i]]));
     },
-    update({ areas, shown, filterKey }) {
-      state.areas = areas;
-      state.numbers = pinNumbers(areas);
+    update({ shown, filterKey }) {
       if (shown.length === 0) {
         root.hidden = true;
         state.wasHidden = true;
@@ -467,7 +467,7 @@ export function createHomeView(actions) {
       heading.hidden = false;
       heading.textContent = t("list.heading", { n: nf.format(shown.length) });
       const note = el("p", { class: "hint measure", text: `${t("list.sourceNote")} ${t("card.linkNote")}` });
-      map.syncSelection(shown);
+      map.prepare(areas, shown);
       const cards = shown.map((a) => areaCard(a, state.type, map.cardOptions(a)));
       map.setCards(shown, cards);
       resultsHost.replaceChildren(
@@ -475,7 +475,7 @@ export function createHomeView(actions) {
         shown.length === 0 ? emptyBox() : el("ul", { class: "cards" }, ...cards.map((c) => c.li)),
         el("div", { class: "notice measure" }, el("p", { text: t("notice.noMedical") })),
       );
-      map.update({ areas, shown, filterKey: `${state.type}|${state.pref}` });
+      map.update({ shown, filterKey: `${state.type}|${state.pref}` });
     } else if (status === "error") {
       map.hide();
       heading.hidden = true;
