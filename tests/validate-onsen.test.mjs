@@ -11,6 +11,7 @@ function area(i) {
     id: `sample-${String.fromCharCode(97 + (i % 26))}${String.fromCharCode(97 + Math.floor(i / 26))}`,
     nameJa: `サンプル${i}温泉`, nameKana: "さんぷる", nameRoman: "Sample Onsen", prefecture: "hokkaido",
     source: { publisher: "サンプル観光協会", title: "題", url: `https://example.invalid/${i}`, checkedAt: TODAY },
+    position: { lat: 35 + i / 10, lon: 135 + i / 10, source: { kind: "manual", note: "テスト用の架空の位置", checkedAt: TODAY } },
     springs: [{ official: "ナトリウム－塩化物泉", type: "chloride", matchedName: "ナトリウム－塩化物泉", basis: "table" }],
   };
 }
@@ -69,4 +70,35 @@ test("泉質ごとの件数", () => {
   assert.equal(counts.chloride, 20);
   assert.equal(Object.keys(counts).length, 10);
   assert.equal(Object.keys(counts).length, TYPE_IDS.length);
+});
+
+test("位置：良い例（wikidata と manual）", () => {
+  assert.deepEqual(check((d) => { d.areas[0].position = { lat: 42.495, lon: 141.144, source: { kind: "wikidata", id: "Q1", checkedAt: TODAY } }; }), []);
+});
+test("位置：ないとエラー、範囲外、取り違え、小数4桁", () => {
+  assert.ok(check((d) => { delete d.areas[3].position; }).some((e) => e.includes("4件目") && e.includes("position がありません")));
+  assert.ok(check((d) => { d.areas[0].position.lat = 23.9; }).some((e) => e.includes("position.lat")));
+  assert.ok(check((d) => { d.areas[0].position.lat = 46.1; }).some((e) => e.includes("position.lat")));
+  assert.ok(check((d) => { d.areas[0].position.lon = 121.9; }).some((e) => e.includes("position.lon")));
+  assert.ok(check((d) => { d.areas[0].position.lon = 146.1; }).some((e) => e.includes("position.lon")));
+  // 緯度と経度の取り違え
+  assert.ok(check((d) => { d.areas[0].position.lat = 141.144; d.areas[0].position.lon = 42.495; }).length >= 2);
+  assert.ok(check((d) => { d.areas[0].position.lat = 35.1234; }).some((e) => e.includes("小数3桁")));
+  assert.ok(check((d) => { d.areas[0].position.lat = "35"; }).some((e) => e.includes("position.lat")));
+});
+test("位置：2件が同じ座標だとエラー", () => {
+  assert.ok(check((d) => { d.areas[1].position.lat = d.areas[0].position.lat; d.areas[1].position.lon = d.areas[0].position.lon; }).some((e) => e.includes("同じ座標")));
+});
+test("位置の出典：kind と項目の組み合わせ", () => {
+  const src = (source) => check((d) => { d.areas[0].position.source = source; });
+  assert.ok(src({ kind: "wikidata", checkedAt: TODAY }).some((e) => e.includes("source.id")));
+  assert.ok(src({ kind: "wikidata", id: "q12", checkedAt: TODAY }).some((e) => e.includes("source.id")));
+  assert.ok(src({ kind: "wikidata", id: "Q12", note: "x", checkedAt: TODAY }).some((e) => e.includes("note")));
+  assert.ok(src({ kind: "manual", checkedAt: TODAY }).some((e) => e.includes("source.note")));
+  assert.ok(src({ kind: "manual", note: "", checkedAt: TODAY }).some((e) => e.includes("source.note")));
+  assert.ok(src({ kind: "manual", note: "x", id: "Q1", checkedAt: TODAY }).some((e) => e.includes("許可していない項目 id")));
+  assert.ok(src({ kind: "osm", note: "x", checkedAt: TODAY }).some((e) => e.includes("kind")));
+  assert.ok(src({ kind: "manual", note: "x", checkedAt: "2999-01-01" }).some((e) => e.includes("未来")));
+  assert.ok(src({ kind: "manual", note: "x", checkedAt: "x" }).some((e) => e.includes("checkedAt")));
+  assert.ok(check((d) => { d.areas[0].position.accuracy = 1; }).some((e) => e.includes("accuracy")));
 });

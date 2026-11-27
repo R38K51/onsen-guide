@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self'; connect-src 'self'; font-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://cyberjapandata.gsi.go.jp; connect-src 'self'; font-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
   <meta name="referrer" content="no-referrer">
   <title>温泉探し</title>
-  <meta name="description" content="泉質（湯の種類）の10種類から、温泉地を探せる非公式の無料サイトです。各温泉地の公式ページへのリンクつき。広告、予約、登録はありません。日本語と英語に対応。">
+  <meta name="description" content="泉質（湯の種類）の10種類から、温泉地を探せる非公式の無料サイトです。広告も登録もなく、通信するのは地図のタイル（国土地理院）のみ。日本語と英語に対応。">
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="./css/style.css">
   <script type="module" src="./src/main.js"></script>
 </head>

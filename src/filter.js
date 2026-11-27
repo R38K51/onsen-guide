@@ -43,3 +43,24 @@ export function prefecturesIn(areas) {
   const set = new Set(areas.map((a) => a.prefecture));
   return PREFECTURES.filter((id) => set.has(id));
 }
+
+// 地図の印と、カードの番号：全件を並び順に並べたときの順位（1始まり）。絞り込んでも変わらない
+export function pinNumbers(areas) {
+  return new Map(sortAreas(areas).map((area, i) => [area.id, i + 1]));
+}
+
+export function formatPinNumber(n) {
+  return String(n).padStart(2, "0");
+}
+
+// 見える範囲の決め方。points は位置のある件（{ lat, lon }）。余白と最大ズームは src/map.js が指定する
+export function mapView(points) {
+  if (points.length === 0) return { mode: "none" };
+  if (points.length === 1) return { mode: "single", center: [points[0].lat, points[0].lon] };
+  const lats = points.map((p) => p.lat);
+  const lons = points.map((p) => p.lon);
+  return {
+    mode: "fit",
+    bounds: [[Math.min(...lats), Math.min(...lons)], [Math.max(...lats), Math.max(...lons)]],
+  };
+}

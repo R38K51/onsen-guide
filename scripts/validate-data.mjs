@@ -43,7 +43,14 @@ export const ALLOWED_URLS = [
   "https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf",
   "https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf",
   "https://github.com/R38K51/onsen-guide/issues",
+  "https://maps.gsi.go.jp/development/ichiran.html", // 出典のリンク（地理院タイル一覧）
 ];
+
+// 地理院タイルの URL。src/constants.js の TILE_URL と index.html の CSP の2か所だけに書く（scanSource は、この host の URL を見逃す）
+export const TILE_HOST = "cyberjapandata.gsi.go.jp";
+export const TILE_URL_EXPECTED = "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png";
+export const CSP_IMG_SRC_EXPECTED = "img-src 'self' https://cyberjapandata.gsi.go.jp";
+export const LEAFLET_SCRIPT_EXPECTED = "./vendor/leaflet/leaflet.js";
 
 const FORBIDDEN_APIS = ["XMLHttpRequest", "WebSocket", "sendBeacon", "innerHTML", "outerHTML", "insertAdjacentHTML", "document.write", "eval("];
 
@@ -79,7 +86,9 @@ export function validateClassification(rows) {
   return errors;
 }
 
-const AREA_KEYS = ["id", "nameJa", "nameKana", "nameRoman", "prefecture", "source", "springs"];
+const AREA_KEYS = ["id", "nameJa", "nameKana", "nameRoman", "prefecture", "source", "position", "springs"];
+const POSITION_KEYS = ["lat", "lon", "source"];
+const decimals = (n) => (String(n).split(".")[1] ?? "").length;
 const SOURCE_KEYS = ["publisher", "title", "url", "checkedAt"];
 // type がない行は、10種類に分類できない泉質名（official と note だけ）
 const SPRING_KEYS = ["official", "type", "matchedName", "basis", "note"];
@@ -101,6 +110,29 @@ function checkUrl(value) {
   return null;
 }
 
+// 位置（設計書 技術設計 M4）。緯度は 24〜46、経度は 122〜146、小数3桁以内（取り違えは範囲で見つける）
+export function validatePosition(position, at, today) {
+  const errors = [];
+  if (position === null || typeof position !== "object" || Array.isArray(position)) return [`${at}: position がありません`];
+  for (const key of Object.keys(position)) if (!POSITION_KEYS.includes(key)) errors.push(`${at}: position に許可していない項目 ${key}`);
+  const { lat, lon, source } = position;
+  if (typeof lat !== "number" || !Number.isFinite(lat) || lat < 24 || lat > 46) errors.push(`${at}: position.lat が 24〜46 の数ではありません（${lat}）`);
+  else if (decimals(lat) > 3) errors.push(`${at}: position.lat が小数3桁を超えています（${lat}）`);
+  if (typeof lon !== "number" || !Number.isFinite(lon) || lon < 122 || lon > 146) errors.push(`${at}: position.lon が 122〜146 の数ではありません（${lon}）`);
+  else if (decimals(lon) > 3) errors.push(`${at}: position.lon が小数3桁を超えています（${lon}）`);
+  if (source === null || typeof source !== "object" || Array.isArray(source)) { errors.push(`${at}: position.source がありません`); return errors; }
+  const allowed = source.kind === "wikidata" ? ["kind", "id", "checkedAt"] : ["kind", "note", "checkedAt"];
+  for (const key of Object.keys(source)) if (!allowed.includes(key)) errors.push(`${at}: position.source に許可していない項目 ${key}`);
+  if (source.kind === "wikidata") {
+    if (typeof source.id !== "string" || !/^Q\d+$/.test(source.id)) errors.push(`${at}: position.source.id が Q と数字ではありません`);
+  } else if (source.kind === "manual") {
+    if (typeof source.note !== "string" || source.note.trim() === "") errors.push(`${at}: position.source.note が空です`);
+  } else errors.push(`${at}: position.source.kind が wikidata でも manual でもありません`);
+  if (!isDate(source.checkedAt)) errors.push(`${at}: position.source.checkedAt が日付ではありません`);
+  else if (source.checkedAt > today) errors.push(`${at}: position.source.checkedAt が未来の日付です`);
+  return errors;
+}
+
 // today は「未来の日付でない」確認用（YYYY-MM-DD）。テストでは固定値を渡す
 export function validateOnsen(data, classificationRows, today = new Date().toISOString().slice(0, 10)) {
   const errors = [];
@@ -117,7 +149,11 @@ export function validateOnsen(data, classificationRows, today = new Date().toISO
     if (!known.has(r.name)) known.set(r.name, new Set());
     known.get(r.name).add(r.type);
   }
-  const seen = { id: new Set(), nameJa: new Set(), url: new Set() };
+  const seen = { id: new Set(), nameJa: new Set(), url: new Set(), position: new Set() };
+  const dupPosition = (value, at) => {
+    if (seen.position.has(value)) errors.push(`${at}: position が他の件と同じ座標です（${value}。コピーミスの疑い）`);
+    seen.position.add(value);
+  };
   const dup = (kind, value, at) => {
     if (seen[kind].has(value)) errors.push(`${at}: ${kind} が重複しています（${value}）`);
     seen[kind].add(value);
@@ -146,6 +182,8 @@ export function validateOnsen(data, classificationRows, today = new Date().toISO
       if (!isDate(s.checkedAt)) errors.push(`${at}: source.checkedAt が日付ではありません`);
       else if (s.checkedAt > today) errors.push(`${at}: source.checkedAt が未来の日付です`);
     }
+    errors.push(...validatePosition(a.position, at, today));
+    if (typeof a.position?.lat === "number" && typeof a.position?.lon === "number") dupPosition(`${a.position.lat},${a.position.lon}`, at);
     if (!Array.isArray(a.springs) || a.springs.length === 0) { errors.push(`${at}: springs が空です`); return; }
     a.springs.forEach((sp, j) => {
       const sat = `${at} springs ${j + 1}行目`;
@@ -228,11 +266,42 @@ export function scanSource(text, name = "(text)") {
   const errors = [];
   for (const m of text.matchAll(/https?:\/\/[^\s"'`)<>\u0080-￿]+/g)) {
     const url = m[0].replace(/[.,;]+$/, "");
+    if (url.startsWith(`https://${TILE_HOST}`) || url.startsWith(`http://${TILE_HOST}`)) continue; // 地理院タイルは scanTileRules で見る
     if (!ALLOWED_URLS.includes(url)) errors.push(`${name}: 許可していない外部 URL ${url}`);
   }
   for (const api of FORBIDDEN_APIS) {
     if (text.includes(api)) errors.push(`${name}: 使わない決まりの API ${api}`);
   }
+  return errors;
+}
+
+// 地理院タイルの規則（M8）。files は { 相対パス: 本文 }（src/ と index.html。vendor/ は対象外）
+export function scanTileRules(files) {
+  const errors = [];
+  for (const [name, text] of Object.entries(files)) {
+    if (!text.includes(TILE_HOST)) continue;
+    if (name !== "src/constants.js" && name !== "index.html") errors.push(`${name}: ${TILE_HOST} は src/constants.js と index.html の CSP だけに書く決まりです`);
+  }
+  const constants = files["src/constants.js"] ?? "";
+  const tile = constants.match(/export const TILE_URL = "([^"]*)"/);
+  if (!tile || tile[1] !== TILE_URL_EXPECTED) errors.push(`src/constants.js: TILE_URL が ${TILE_URL_EXPECTED} と同じではありません`);
+  if (constants.split(TILE_HOST).length - 1 !== 1) errors.push(`src/constants.js: ${TILE_HOST} の出現は TILE_URL の1回だけにします`);
+  const html = files["index.html"] ?? "";
+  const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]*)"/);
+  const directives = csp ? csp[1].split(";").map((d) => d.trim()) : [];
+  if (!directives.includes("default-src 'none'")) errors.push("index.html: CSP に default-src 'none' がありません");
+  if (!directives.includes(CSP_IMG_SRC_EXPECTED)) errors.push(`index.html: CSP の img-src が ${CSP_IMG_SRC_EXPECTED} と同じではありません`);
+  for (const d of ["script-src 'self'", "style-src 'self'", "connect-src 'self'", "font-src 'none'"]) {
+    if (!directives.includes(d)) errors.push(`index.html: CSP に ${d} がありません`);
+  }
+  if (directives.some((d) => d.includes("unsafe-inline") || d.includes("unsafe-eval"))) errors.push("index.html: CSP に unsafe-inline か unsafe-eval があります");
+  // 動的に作る script の src は、同梱の leaflet.js だけ（constants の定数を使う）
+  for (const [name, text] of Object.entries(files)) {
+    if (name === "src/constants.js") continue;
+    if (/\.src\s*=\s*["'`]/.test(text)) errors.push(`${name}: script の src を文字で直接書いています（constants の LEAFLET_SCRIPT を使います）`);
+  }
+  const script = constants.match(/export const LEAFLET_SCRIPT = "([^"]*)"/);
+  if (!script || script[1] !== LEAFLET_SCRIPT_EXPECTED) errors.push(`src/constants.js: LEAFLET_SCRIPT が ${LEAFLET_SCRIPT_EXPECTED} と同じではありません`);
   return errors;
 }
 
@@ -256,7 +325,14 @@ export async function validateAll(root) {
   errors.push(...validateDictionaries(ja, en));
 
   const files = [join(root, "index.html"), ...listFiles(join(root, "src"), [".js", ".html"]), ...listFiles(join(root, "css"), [".css"])];
-  for (const f of files) errors.push(...scanSource(readFileSync(f, "utf8"), relative(root, f)));
+  const texts = {};
+  for (const f of files) {
+    const text = readFileSync(f, "utf8");
+    const name = relative(root, f).replaceAll("\\", "/");
+    errors.push(...scanSource(text, name));
+    if (name === "index.html" || name.startsWith("src/")) texts[name] = text;
+  }
+  errors.push(...scanTileRules(texts));
 
   const notes = [];
   let areas = 0;

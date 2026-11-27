@@ -18,7 +18,7 @@ createServer(async (req, res) => {
   try {
     const pathname = decodeURIComponent(new URL(req.url, "http://127.0.0.1").pathname);
     const target = resolve(join(ROOT, normalize(pathname === "/" ? "/index.html" : pathname)));
-    const allowed = ["index.html", "favicon.svg", "css", "src", "data"].some(
+    const allowed = ["index.html", "favicon.svg", "css", "src", "data", "vendor"].some(
       (p) => target === join(ROOT, p) || target.startsWith(join(ROOT, p) + sep),
     );
     if (!allowed) throw new Error("not allowed");

@@ -13,6 +13,15 @@
     "url": "https://noboribetsu-spa.jp/faq/onsen-stay/",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 42.495,
+    "lon": 141.144,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q3888689",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "硫黄泉",
@@ -79,6 +88,15 @@
     "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10613.html",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 42.965,
+    "lon": 141.163,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11452192",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "塩化物泉",
@@ -112,6 +130,15 @@
     "title": "川湯温泉",
     "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10610.html",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 43.638,
+    "lon": 144.437,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11478935",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -159,6 +186,15 @@
     "url": "https://www.visit-hokkaido.jp/spa/spot/detail_10611.html",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 43.725,
+    "lon": 142.947,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11465750",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "炭酸水素塩泉",
@@ -191,6 +227,15 @@
     "title": "温泉",
     "url": "https://www.naruko.gr.jp/%E6%B8%A9%E6%B3%89/",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 38.743,
+    "lon": 140.717,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11675321",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -249,6 +294,15 @@
     "url": "https://zaomountainresort.com/about/",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 38.169,
+    "lon": 140.397,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q7159554",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "硫黄泉",
@@ -269,6 +323,15 @@
     "title": "飯坂温泉・穴原温泉（観光スポット）",
     "url": "https://www.f-kankou.jp/spot/34311",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 37.832,
+    "lon": 140.454,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q17192714",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -298,6 +361,15 @@
     "title": "那須の温泉",
     "url": "https://www.nasukogen.org/nasuonsen/",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 37.124,
+    "lon": 139.996,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11642937",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -352,6 +424,15 @@
     "url": "https://www.city.annaka.lg.jp/page/2033.html",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 36.3,
+    "lon": 138.847,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11588088",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "ナトリウム−塩化物・炭酸水素塩強塩温泉",
@@ -373,6 +454,15 @@
     "title": "箱根十七湯",
     "url": "https://www.hakone.or.jp/6882",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 35.242,
+    "lon": 139.058,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q908993",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -458,6 +548,15 @@
     "url": "https://www.tabimati.net/feature/detail_3.html",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 36.247,
+    "lon": 136.373,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q3571451",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "カルシウム・ナトリウム一硫酸塩泉",
@@ -479,6 +578,15 @@
     "title": "野沢温泉 外湯めぐりガイド｜13ヶ所の温泉マップ",
     "url": "https://nozawakanko.jp/hotspring/",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 36.922,
+    "lon": 138.448,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11645764",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -520,6 +628,15 @@
     "url": "https://www.gero-spa.com/onsen/",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 35.809,
+    "lon": 137.244,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11360701",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "単純温泉（アルカリ性単純温泉）",
@@ -542,6 +659,15 @@
     "url": "https://kinosaki-spa.gr.jp/about/spa/",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 35.628,
+    "lon": 134.8,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11426141",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "ナトリウム・カルシウム-塩化物・高温泉",
@@ -563,6 +689,15 @@
     "title": "泉質",
     "url": "https://www.arima-onsen.com/about/spring_quality",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 34.798,
+    "lon": 135.248,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q4790673",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -627,6 +762,15 @@
     "title": "源泉豊富な南紀白浜",
     "url": "https://www.nankishirahama.jp/feature/1989/",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 33.68,
+    "lon": 135.341,
+    "source": {
+     "kind": "manual",
+     "note": "公式ページの所在地（白浜町）から、温泉街の中心を読み取った。地理院の地名検索で、白良浜と崎の湯の位置を見て、その間とした",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -709,6 +853,15 @@
     "url": "https://misasaonsen.jp/about",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 35.411,
+    "lon": 133.893,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11355561",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "含放射能/ナトリウム・塩化物泉",
@@ -745,6 +898,15 @@
     "url": "https://www.kankou-shimane.com/spa/detail/08_tamatsukuri",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 35.416,
+    "lon": 133.01,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q3514711",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "ナトリウム・カルシウム－硫酸塩・塩化物泉",
@@ -767,6 +929,15 @@
     "url": "https://www.city.matsuyama.ehime.jp/kanko/kankoguide/kankomeisho/dogoonsen/info/seibun.html",
     "checkedAt": "2026-11-22"
    },
+   "position": {
+    "lat": 33.852,
+    "lon": 132.786,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q1037748",
+     "checkedAt": "2026-11-27"
+    }
+   },
    "springs": [
     {
      "official": "アルカリ性単純温泉",
@@ -787,6 +958,15 @@
     "title": "雲仙の泉質・効能",
     "url": "https://unzenonsen.unzen.org/principle/",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 32.742,
+    "lon": 130.26,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q11660005",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {
@@ -828,6 +1008,15 @@
     "title": "温泉百科 温泉データ",
     "url": "https://www.city.beppu.oita.jp/sangyou/onsen/detail4.html",
     "checkedAt": "2026-11-22"
+   },
+   "position": {
+    "lat": 33.28,
+    "lon": 131.5,
+    "source": {
+     "kind": "wikidata",
+     "id": "Q4890932",
+     "checkedAt": "2026-11-27"
+    }
    },
    "springs": [
     {

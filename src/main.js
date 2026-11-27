@@ -1,4 +1,4 @@
-// 起動。データを読み、URL（ハッシュ）から状態を決めて描く。外部通信はしない（同じ場所の data/onsen.json だけ）。
+// 起動。データを読み、URL（ハッシュ）から状態を決めて描く。通信は、このサイト自身のファイルと、地図のタイル（国土地理院）のみ。
 import { detectLang, getLang, setLang, t } from "./i18n.js";
 import { buildHash, parseHash } from "./router.js";
 import { applyStaticText, createAboutView, createHomeView, markLanguage, renderFooter } from "./render.js";
@@ -12,6 +12,7 @@ let view = null;
 let viewKey = null;
 let lastRoute = null;
 let lastLang = null;
+let selectedId = null; // 地図で選んだ温泉地。URL には入れない。言語を切り替えても残す
 
 function formatDate(iso) {
   const date = new Date(`${iso}T00:00:00Z`);
@@ -34,6 +35,10 @@ const actions = {
   onPref: (pref) => navigate({ route: "home", pref }),
   onClear: () => navigate({ route: "home", type: null, pref: null }),
   onReload: () => location.reload(),
+  getSelected: () => selectedId,
+  onSelectionChange: (id) => {
+    selectedId = id;
+  },
 };
 
 function render() {
@@ -60,6 +65,7 @@ function render() {
   const app = document.getElementById("app");
   const key = parsed.route === "about" ? `about|${lang}|${status}` : `home|${lang}`;
   if (key !== viewKey) {
+    view?.destroy?.();
     if (parsed.route === "about") view = createAboutView(status, data, formatDate);
     else view = createHomeView(actions);
     viewKey = key;

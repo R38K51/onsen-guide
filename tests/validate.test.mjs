@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import {
-  TYPE_IDS, PREFECTURE_IDS, validateClassification, validateDictionaries, scanSource, validateAll,
+  TYPE_IDS, PREFECTURE_IDS, validateClassification, validateDictionaries, scanSource, scanTileRules, validateAll,
 } from "../scripts/validate-data.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
@@ -141,4 +141,25 @@ test("実データ：対照表は10種類すべてを含み、各行に出典の
 test("静的検査：日本語の括弧の直前までを URL とみなす", () => {
   assert.deepEqual(scanSource("（https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf）を加工"), []);
   assert.match(scanSource("（https://example.invalid/x）").join("\n"), /外部 URL/);
+});
+
+test("静的検査：地理院タイルの URL は constants と CSP の2か所だけ", () => {
+  const csp = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' https://cyberjapandata.gsi.go.jp; connect-src 'self'; font-src 'none'">`;
+  const constants = 'export const TILE_URL = "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png";\nexport const LEAFLET_SCRIPT = "./vendor/leaflet/leaflet.js";\n';
+  const good = { "index.html": csp, "src/constants.js": constants, "src/map.js": "x" };
+  assert.deepEqual(scanTileRules(good), []);
+  // タイルの host は、ほかの src に書けない
+  assert.match(scanTileRules({ ...good, "src/map.js": 'fetch("https://cyberjapandata.gsi.go.jp/")' }).join("\n"), /src\/map\.js/);
+  // URL の変更、CSP の差
+  assert.match(scanTileRules({ ...good, "src/constants.js": constants.replace("/pale/", "/std/") }).join("\n"), /TILE_URL/);
+  assert.match(scanTileRules({ ...good, "index.html": csp.replace("img-src 'self' https://cyberjapandata.gsi.go.jp", "img-src 'self' https:") }).join("\n"), /img-src/);
+  assert.match(scanTileRules({ ...good, "index.html": csp.replace("default-src 'none'; ", "") }).join("\n"), /default-src/);
+  assert.match(scanTileRules({ ...good, "index.html": csp.replace("style-src 'self'", "style-src 'self' 'unsafe-inline'") }).join("\n"), /unsafe-inline/);
+  assert.ok(scanTileRules({ ...good, "index.html": csp.replace("connect-src 'self'", "connect-src 'self' https://cyberjapandata.gsi.go.jp") }).some((e) => e.includes("connect-src")));
+  // script の src は定数だけ
+  assert.match(scanTileRules({ ...good, "src/map.js": 'script.src = "./x.js"' }).join("\n"), /script の src/);
+  // 外部 URL の検査は、タイルの host を見逃し、ほかは止める
+  assert.deepEqual(scanSource('const u = "https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png"'), []);
+  assert.match(scanSource('"https://example.invalid/"').join("\n"), /外部 URL/);
+  assert.deepEqual(scanSource("https://maps.gsi.go.jp/development/ichiran.html"), []);
 });

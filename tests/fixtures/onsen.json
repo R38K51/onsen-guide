@@ -13,6 +13,15 @@
     "url": "https://example.invalid/sample",
     "checkedAt": "2026-11-01"
    },
+   "position": {
+    "lat": 43,
+    "lon": 141.3,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
+   },
    "springs": [
     {
      "official": "単純温泉",
@@ -33,6 +42,15 @@
     "title": "テスト用ページ",
     "url": "https://example.invalid/alpha",
     "checkedAt": "2026-11-01"
+   },
+   "position": {
+    "lat": 42.5,
+    "lon": 141.1,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
    },
    "springs": [
     {
@@ -61,6 +79,15 @@
     "url": "https://example.invalid/beta",
     "checkedAt": "2026-11-01"
    },
+   "position": {
+    "lat": 43.4,
+    "lon": 142.9,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
+   },
    "springs": [
     {
      "official": "含硫黄泉",
@@ -81,6 +108,15 @@
     "title": "テスト用ページ",
     "url": "https://example.invalid/gamma",
     "checkedAt": "2026-11-01"
+   },
+   "position": {
+    "lat": 39.7,
+    "lon": 140.1,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
    },
    "springs": [
     {
@@ -109,6 +145,15 @@
     "url": "https://example.invalid/delta",
     "checkedAt": "2026-11-01"
    },
+   "position": {
+    "lat": 36.6,
+    "lon": 138.6,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
+   },
    "springs": [
     {
      "official": "酸性泉",
@@ -136,6 +181,15 @@
     "url": "https://example.invalid/epsilon",
     "checkedAt": "2026-11-01"
    },
+   "position": {
+    "lat": 36.4,
+    "lon": 138.8,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
+   },
    "springs": [
     {
      "official": "含鉄泉",
@@ -156,6 +210,15 @@
     "title": "テスト用ページ",
     "url": "https://example.invalid/zeta",
     "checkedAt": "2026-11-01"
+   },
+   "position": {
+    "lat": 35.2,
+    "lon": 139.1,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
    },
    "springs": [
     {
@@ -178,6 +241,15 @@
     "url": "https://example.invalid/eta",
     "checkedAt": "2026-11-01"
    },
+   "position": {
+    "lat": 33.3,
+    "lon": 131.5,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
+   },
    "springs": [
     {
      "official": "テスト用の分類できない泉質名",
@@ -196,6 +268,15 @@
     "title": "テスト用ページ",
     "url": "https://example.invalid/theta",
     "checkedAt": "2026-11-01"
+   },
+   "position": {
+    "lat": 33.2,
+    "lon": 131.4,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
    },
    "springs": [
     {
@@ -223,6 +304,15 @@
     "title": "テスト用ページ",
     "url": "https://example.invalid/long",
     "checkedAt": "2026-11-01"
+   },
+   "position": {
+    "lat": 39.5,
+    "lon": 140.3,
+    "source": {
+     "kind": "manual",
+     "note": "テスト用の架空の位置",
+     "checkedAt": "2026-11-01"
+    }
    },
    "springs": [
     {

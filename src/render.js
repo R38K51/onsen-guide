@@ -1,7 +1,8 @@
 // DOM を作る。createElement と textContent だけを使う（HTML の文字列を組み立てて入れることはしない）。
 import { DICTIONARIES, getLang, t } from "./i18n.js";
-import { TYPE_IDS } from "./constants.js";
-import { areaTypes, countByType, filterAreas, officialNames, prefecturesIn, sortAreas } from "./filter.js";
+import { LEAFLET_VERSION, MAP_LOADING_DELAY_MS, TILE_SOURCE_LIST_URL, TYPE_IDS } from "./constants.js";
+import { areaTypes, countByType, filterAreas, formatPinNumber, officialNames, pinNumbers, prefecturesIn, sortAreas } from "./filter.js";
+import { createMapView } from "./map.js";
 import { buildHash } from "./router.js";
 
 const SVG_NS = "http://www.w3.org/2000/svg";
@@ -86,15 +87,40 @@ function linkLabelNodes(publisher) {
   return [before, el("span", { lang: "ja", text: publisher }), after];
 }
 
-function areaCard(area, selectedType) {
+// 温泉地の表示名（英語のときはローマ字）
+function areaName(area) {
+  return getLang() === "en" ? area.nameRoman : area.nameJa;
+}
+
+// map：{ no, onShow }（位置のある件だけ。番号と「地図で見る」は、地図が ready になるまで hidden）
+function areaCard(area, selectedType, map) {
   const english = getLang() === "en";
   const tags = areaTypes(area).map((id) =>
     el("li", { class: id === selectedType ? "tag is-selected" : "tag", text: t(`type.${id}.name`) }),
   );
-  return el(
+  const parts = {};
+  if (map) {
+    parts.pin = el(
+      "p",
+      { class: "card-pin", hidden: true },
+      el("span", { class: "pin-badge", "aria-hidden": "true", text: formatPinNumber(map.no) }),
+      el("span", { class: "sr-only", text: t("card.pinNo", { no: formatPinNumber(map.no) }) }),
+    );
+    parts.onMap = el("p", { class: "card-onmap", hidden: true }, icon("check"), t("card.onMap"));
+    parts.button = el("button", {
+      type: "button",
+      class: "show-on-map",
+      hidden: true,
+      "aria-label": t("card.showOnMapLabel", { name: areaName(area) }),
+      text: t("card.showOnMap"),
+    });
+    parts.button.addEventListener("click", () => map.onShow());
+  }
+  const li = el(
     "li",
     { class: "card" },
-    el("h3", { lang: "ja", text: area.nameJa }),
+    parts.pin ?? null,
+    el("h3", { lang: "ja", tabindex: "-1", text: area.nameJa }),
     english ? el("p", { class: "roman", lang: "en", text: area.nameRoman }) : null,
     el("p", { class: "pref", text: t(`pref.${area.prefecture}`) }),
     tags.length > 0 ? el("ul", { class: "tags" }, ...tags) : null,
@@ -104,8 +130,10 @@ function areaCard(area, selectedType) {
       `${t("card.officialName")}`,
       el("span", { lang: "ja", text: officialNames(area).join("、") }),
     ),
-    externalLink(area.source.url, "source-link", ...linkLabelNodes(area.source.publisher)),
+    parts.onMap ?? null,
+    el("div", { class: "card-foot" }, externalLink(area.source.url, "source-link", ...linkLabelNodes(area.source.publisher)), parts.button ?? null),
   );
+  return { li, ...parts };
 }
 
 function typePanel(typeId, headingId) {
@@ -124,6 +152,222 @@ function typePanel(typeId, headingId) {
     el("div", { class: "notice" }, el("p", { text: t("panel.caution1") }), el("p", { text: t("panel.caution2") })),
     el("p", { class: "small", text: t("type.pressedHint") }),
   );
+}
+
+// 地図の枠。上の枠（skip、地図、読めないときの枠、案内の行、注記）と、選択の状態を持つ。
+// Leaflet は src/map.js だけが知っている。カードの番号と「地図で見る」は、地図が ready になってから出す
+function createMapPanel(actions) {
+  const lang = getLang();
+  const state = {
+    status: "off", // off、loading、ready、failed
+    reloading: false,
+    selectedId: actions.getSelected?.() ?? null,
+    controller: null,
+    loadingTimer: null,
+    lastFilterKey: null,
+    areas: [],
+    numbers: new Map(),
+    cards: new Map(),
+    wasHidden: true,
+  };
+
+  const skip = el("button", { type: "button", class: "map-skip", text: t("map.skip") });
+  const help = el("p", { id: "map-help", class: "sr-only", text: t("map.help") });
+  const canvas = el("div", { class: "map-canvas" });
+  const loadingText = el("p", { class: "map-loading", hidden: true, text: t("map.loading") });
+  const frame = el("div", { class: "map-frame" }, canvas, loadingText);
+  const reloadButton = el("button", { type: "button", text: t("map.reload") });
+  const failed = el("div", { class: "notice map-failed", role: "status", hidden: true }, el("p", { text: t("map.error") }), reloadButton);
+
+  const hintText = el("p", { class: "map-hint-text" });
+  const toCard = el("button", { type: "button", hidden: true, text: t("map.toCard") });
+  const clearSelection = el("button", { type: "button", hidden: true, text: t("map.clearSelection") });
+  const hint = el("div", { class: "map-hint", hidden: true }, hintText, el("div", { class: "map-hint-actions" }, toCard, clearSelection));
+
+  // 注記：中心の注記、出典、通信の注記、位置のない件
+  const marker = "\u0000";
+  const sourceParts = t("map.source", { link: marker }).split(marker);
+  const open = lang === "ja" ? "（" : " (";
+  const close = lang === "ja" ? "）" : ")";
+  const sourceLine = el(
+    "p",
+    {},
+    sourceParts[0],
+    externalLink(TILE_SOURCE_LIST_URL, "ref-link", `${t("map.sourceLink")}${open}${t("map.sourceExternal")}${close}`),
+    sourceParts[1] ?? "",
+    lang === "en" ? ` ${t("map.jaNote")}` : null,
+  );
+  const aboutText = t("nav.about");
+  const networkParts = t("map.network").split(aboutText);
+  const networkLine = el(
+    "p",
+    {},
+    networkParts[0],
+    networkParts.length > 1 ? el("a", { class: "ref-link", href: buildHash({ route: "about", lang }), text: aboutText }) : null,
+    networkParts[1] ?? "",
+  );
+  const noPosition = el("p", { hidden: true });
+  const notes = el(
+    "div",
+    { class: "map-notes", hidden: true },
+    el("p", { text: t("map.approx") }),
+    sourceLine,
+    networkLine,
+    noPosition,
+  );
+  const announce = el("p", { class: "sr-only", role: "status" });
+  const root = el("div", { class: "map-box", hidden: true }, skip, help, frame, failed, hint, notes, announce);
+
+  const areaById = () => new Map(state.areas.map((a) => [a.id, a]));
+
+  function applyUi() {
+    const ready = state.status === "ready";
+    root.classList.toggle("is-ready", ready);
+    frame.hidden = state.status === "failed";
+    failed.hidden = !(state.status === "failed" || state.reloading);
+    skip.hidden = state.status === "failed";
+    hint.hidden = !ready;
+    notes.hidden = !ready;
+    for (const [id, card] of state.cards) {
+      if (!card.pin) continue;
+      const selected = ready && id === state.selectedId;
+      card.pin.hidden = !ready;
+      card.button.hidden = !ready;
+      card.onMap.hidden = !selected;
+      card.li.classList.toggle("is-onmap", selected);
+    }
+    renderHint();
+  }
+
+  function renderHint() {
+    const area = state.selectedId ? areaById().get(state.selectedId) : null;
+    if (area && state.numbers.has(area.id)) {
+      hintText.textContent = t("map.selected", {
+        no: formatPinNumber(state.numbers.get(area.id)),
+        name: areaName(area),
+        pref: t(`pref.${area.prefecture}`),
+      });
+    } else {
+      hintText.textContent = `${t("map.hint.idle")} ${t("map.overlapHint")}`;
+    }
+    toCard.hidden = clearSelection.hidden = !area;
+  }
+
+  function setSelected(id) {
+    state.selectedId = id;
+    actions.onSelectionChange?.(id);
+    const area = id ? areaById().get(id) : null;
+    if (area) announce.textContent = t("map.announce", { name: areaName(area) });
+    applyUi();
+  }
+
+  function onStatus(next) {
+    state.status = next;
+    clearTimeout(state.loadingTimer);
+    loadingText.hidden = true;
+    if (next === "loading") {
+      state.loadingTimer = setTimeout(() => {
+        if (state.status === "loading") loadingText.hidden = false;
+      }, MAP_LOADING_DELAY_MS);
+    }
+    const hadFocus = failed.contains(document.activeElement);
+    if (next !== "loading") state.reloading = false;
+    applyUi();
+    if (next === "ready" && hadFocus) state.controller.focusMap();
+  }
+
+  function ensureController() {
+    if (state.controller) return;
+    state.controller = createMapView({
+      host: canvas,
+      labels: {
+        label: t("map.label"),
+        helpId: "map-help",
+        zoomIn: t("map.zoomIn"),
+        zoomOut: t("map.zoomOut"),
+        pin: (no, point) => t("map.pin", { no: formatPinNumber(no), name: areaName(point), pref: t(`pref.${point.prefecture}`) }),
+      },
+      onSelect: setSelected,
+      onStatus,
+    });
+    state.controller.start();
+  }
+
+  // カードの「地図で見る」を押したとき
+  function showOnMap(id) {
+    state.controller.select(id);
+    const rect = frame.getBoundingClientRect();
+    const visible = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+    if (visible < rect.height / 2) frame.scrollIntoView({ block: "nearest", behavior: "instant" });
+  }
+
+  skip.addEventListener("click", () => {
+    const first = document.querySelector(".cards .card h3");
+    if (first) first.focus();
+  });
+  reloadButton.addEventListener("click", () => {
+    state.reloading = true;
+    state.controller.reload();
+  });
+  clearSelection.addEventListener("click", () => {
+    state.controller.clearSelection();
+    state.controller.focusMap();
+  });
+  toCard.addEventListener("click", () => {
+    const button = state.cards.get(state.selectedId)?.button;
+    if (!button) return;
+    button.scrollIntoView({ block: "center", behavior: "instant" });
+    button.focus({ preventScroll: true });
+  });
+
+  return {
+    root,
+    // 結果から消えた温泉地の選択を外す（カードを作り直す前に呼ぶ）
+    syncSelection(shown) {
+      if (state.selectedId && !shown.some((a) => a.id === state.selectedId && a.position)) {
+        state.selectedId = null;
+        actions.onSelectionChange?.(null);
+      }
+    },
+    cardOptions(area) {
+      if (!area.position) return null;
+      return { no: state.numbers.get(area.id) ?? 0, onShow: () => showOnMap(area.id) };
+    },
+    setCards(shown, cards) {
+      state.cards = new Map(shown.map((a, i) => [a.id, cards[i]]));
+    },
+    update({ areas, shown, filterKey }) {
+      state.areas = areas;
+      state.numbers = pinNumbers(areas);
+      if (shown.length === 0) {
+        root.hidden = true;
+        state.wasHidden = true;
+        return;
+      }
+      root.hidden = false;
+      const points = shown.filter((a) => a.position).map((a) => ({
+        id: a.id, lat: a.position.lat, lon: a.position.lon, nameJa: a.nameJa, nameRoman: a.nameRoman, prefecture: a.prefecture,
+      }));
+      const missing = shown.length - points.length;
+      noPosition.hidden = missing === 0;
+      noPosition.textContent = missing === 0 ? "" : t("map.noPosition", { n: missing });
+      const refit = filterKey !== state.lastFilterKey;
+      state.lastFilterKey = filterKey;
+      ensureController();
+      if (state.wasHidden) state.controller.invalidate();
+      state.wasHidden = false;
+      state.controller.update({ points, numbers: state.numbers, selectedId: state.selectedId, refit });
+      applyUi();
+    },
+    hide() {
+      root.hidden = true;
+      state.wasHidden = true;
+    },
+    destroy() {
+      clearTimeout(state.loadingTimer);
+      state.controller?.destroy();
+    },
+  };
 }
 
 // 画面A。札を押しても作り直さず、必要な所だけ更新する（フォーカスを動かさない）
@@ -171,7 +415,8 @@ export function createHomeView(actions) {
   const panelHost = el("div");
   const heading = el("h2", { id: "results-heading", "aria-live": "polite", "aria-atomic": "true", hidden: true });
   const resultsHost = el("div");
-  const results = el("div", { class: "results" }, panelHost, heading, resultsHost);
+  const map = createMapPanel(actions);
+  const results = el("div", { class: "results" }, panelHost, heading, map.root, resultsHost);
 
   const root = el("div", { class: "home" }, el("div", { class: "home-head" }, h1, lead, notes), filters, results);
 
@@ -222,12 +467,17 @@ export function createHomeView(actions) {
       heading.hidden = false;
       heading.textContent = t("list.heading", { n: nf.format(shown.length) });
       const note = el("p", { class: "hint measure", text: `${t("list.sourceNote")} ${t("card.linkNote")}` });
+      map.syncSelection(shown);
+      const cards = shown.map((a) => areaCard(a, state.type, map.cardOptions(a)));
+      map.setCards(shown, cards);
       resultsHost.replaceChildren(
         note,
-        shown.length === 0 ? emptyBox() : el("ul", { class: "cards" }, ...shown.map((a) => areaCard(a, state.type))),
+        shown.length === 0 ? emptyBox() : el("ul", { class: "cards" }, ...cards.map((c) => c.li)),
         el("div", { class: "notice measure" }, el("p", { text: t("notice.noMedical") })),
       );
+      map.update({ areas, shown, filterKey: `${state.type}|${state.pref}` });
     } else if (status === "error") {
+      map.hide();
       heading.hidden = true;
       const reload = el("button", { type: "button", text: t("error.reload") });
       reload.addEventListener("click", () => actions.onReload());
@@ -235,18 +485,20 @@ export function createHomeView(actions) {
         el("div", { class: "notice state-box", role: "alert" }, el("p", { text: t("error.load") }), reload),
       );
     } else if (status === "loading") {
+      map.hide();
       heading.hidden = true;
       resultsHost.replaceChildren(
         el("p", { role: "status", text: t("loading") }),
         el("div", { class: "skeletons", "aria-hidden": "true" }, el("div", { class: "skeleton" }), el("div", { class: "skeleton" }), el("div", { class: "skeleton" })),
       );
     } else {
+      map.hide();
       heading.hidden = true;
       resultsHost.replaceChildren();
     }
   }
 
-  return { root, heading: h1, update };
+  return { root, heading: h1, update, destroy: () => map.destroy() };
 }
 
 function section(titleKey, ...children) {
@@ -264,6 +516,12 @@ function areaTable(areas) {
         {},
         el("span", { lang: "ja", text: area.nameJa }),
         english ? el("span", { lang: "en", text: ` (${area.nameRoman})` }) : null,
+        area.position
+          ? el(
+              "span",
+              { class: "pos-source", text: `${t("about.table.position")}${t(area.position.source.kind === "wikidata" ? "about.table.positionWikidata" : "about.table.positionManual")}` },
+            )
+          : null,
       ),
       el("td", { lang: "ja", text: area.source.publisher }),
       el("td", {}, externalLink(area.source.url, "", area.source.url)),
@@ -336,6 +594,13 @@ export function createAboutView(status, data, formatDate) {
       ),
     ),
     section("about.data.h", ...dataBlock),
+    section(
+      "about.map.h",
+      el("p", { class: "measure", text: t("about.map.text1") }),
+      el("p", { class: "measure", text: t("about.map.text2") }),
+      el("p", { class: "measure", text: t("about.map.text3", { version: LEAFLET_VERSION }) }),
+      el("p", {}, externalLink(TILE_SOURCE_LIST_URL, "ref-link", t("about.map.link"))),
+    ),
     section("about.translation.h", el("p", { class: "measure", text: t("notice.translation") }), el("p", { class: "measure", text: t("notice.processing") })),
     section("about.privacy.h", el("p", { class: "measure", text: t("notice.noTracking") }), el("p", { class: "measure", text: t("about.privacy.text") })),
     section(

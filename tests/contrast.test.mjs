@@ -35,3 +35,18 @@ test("押せるものの枠と地の対比は 3:1 以上", () => {
   }
   assert.ok(ratio(color("color-focus"), color("color-bg")) >= 3);
 });
+
+test("地図：印の字と地は 4.5:1 以上、印の枠と地図の地、地図の枠と地図の地は 3:1 以上", () => {
+  const resolve = (name) => {
+    const m = css.match(new RegExp(`--${name}:\s*([^;]+);`))[1].trim();
+    const ref = m.match(/^var\(--([\w-]+)\)$/);
+    return ref ? resolve(ref[1]) : m;
+  };
+  const c = (name) => resolve(name).match(/#[0-9A-Fa-f]{6}/)[0];
+  assert.ok(ratio(c("color-marker-text"), c("color-marker-bg")) >= 4.5);
+  assert.ok(ratio(c("color-marker-selected-text"), c("color-marker-selected-bg")) >= 4.5);
+  assert.ok(ratio(c("color-marker-border"), c("color-map-bg")) >= 3);
+  assert.ok(ratio(c("color-marker-border"), c("color-marker-bg")) >= 3);
+  assert.ok(ratio(c("color-border-control"), c("color-map-bg")) >= 3);
+  assert.ok(ratio(c("color-text"), c("color-map-bg")) >= 4.5);
+});

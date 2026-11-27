@@ -16,7 +16,7 @@ async function overflowReport(page) {
     const root = document.documentElement;
     if (root.scrollWidth > root.clientWidth) out.push(`page ${root.scrollWidth}>${root.clientWidth}`);
     for (const el of document.querySelectorAll("button, h1, h2, h3, .tag, .card, a, p, td, th, select, label")) {
-      if (el.closest("[hidden]")) continue;
+      if (el.closest("[hidden]") || el.closest(".sr-only") || el.matches(".map-skip:not(:focus)")) continue;
       if (getComputedStyle(el).display === "inline") continue;
       if (el.scrollWidth > el.clientWidth + 1) out.push(`${el.tagName}.${el.className} ${el.scrollWidth}>${el.clientWidth}`);
     }
@@ -28,7 +28,7 @@ async function smallTargets(page) {
   return page.evaluate(() => {
     const out = [];
     for (const el of document.querySelectorAll("button, a, select")) {
-      if (el.classList.contains("skip-link") || el.closest("[hidden]")) continue;
+      if (el.classList.contains("skip-link") || el.closest("[hidden]") || el.matches(".map-skip:not(:focus)")) continue;
       const r = el.getBoundingClientRect();
       if (r.width === 0 && r.height === 0) continue;
       if (r.height < 43.5 || r.width < 43.5) out.push(`${el.tagName}.${el.className} ${Math.round(r.width)}x${Math.round(r.height)}`);
@@ -249,13 +249,14 @@ for (const size of SIZES) {
             else if (a.dataset.route === "about") kind = "about";
             else if (a.classList.contains("chip")) kind = "chip";
             else if (a.tagName === "SELECT") kind = "select";
+            else if (a.classList.contains("map-skip")) kind = "mapskip";
             else if (a.classList.contains("source-link")) kind = "link";
             return { kind, outline: getComputedStyle(a).outlineWidth };
           });
           kinds.push(info.kind);
           outline = info.outline;
         }
-        expect(kinds).toEqual(["skip", "site", "lang:ja", "lang:en", "about", ...Array(10).fill("chip"), "select", "link"]);
+        expect(kinds).toEqual(["skip", "site", "lang:ja", "lang:en", "about", ...Array(10).fill("chip"), "select", "mapskip"]);
         expect(outline).toBe("3px");
 
         const first = page.locator("button.chip").first();
@@ -287,10 +288,11 @@ for (const size of SIZES) {
 
       test("読み込み中：200ms を超えたときだけ出る", async ({ page }) => {
         await openApp(page, `#/?lang=${lang}`, { delay: 1200 });
-        await expect(page.getByRole("status")).toHaveText(lang === "ja" ? "読み込み中…" : "Loading…");
+        await expect(page.getByRole("status").filter({ hasText: /./ })).toHaveText(lang === "ja" ? "読み込み中…" : "Loading…");
         await expect(page.locator("button.chip")).toHaveCount(10);
         await waitReady(page);
-        await expect(page.getByRole("status")).toHaveCount(0);
+        // 読み上げ用の空の status（地図の選択の通知）は数えない。文字のある status が消える
+        await expect(page.getByRole("status").filter({ hasText: /./ })).toHaveCount(0);
       });
 
       test("読み込みの失敗：alert と再読み込み、札と説明は出す", async ({ page, monitor }) => {
