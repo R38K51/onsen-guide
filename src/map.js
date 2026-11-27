@@ -1,7 +1,7 @@
 // 地図（Leaflet）を扱う唯一のファイル。ほかのファイルはグローバルの L を知らない。
 // 通信は、このサイト自身の vendor/leaflet/leaflet.js と、地理院タイル（TILE_URL）の画像だけ。
 import {
-  LEAFLET_SCRIPT, MAP_BOUNDS, MAP_FIT_MAX_ZOOM, MAP_FIT_PADDING, MAP_MAX_ZOOM, MAP_MIN_ZOOM,
+  LEAFLET_SCRIPT, MAP_BOUNDS, MAP_FIT_MAX_ZOOM, MAP_FIT_PADDING, MAP_FIT_PADDING_LEFT, MAP_MAX_ZOOM, MAP_MIN_ZOOM,
   MAP_SINGLE_ZOOM, MAP_TILE_TIMEOUT_MS, TILE_URL,
 } from "./constants.js";
 import { formatPinNumber, mapView } from "./filter.js";
@@ -120,7 +120,12 @@ export function createMapView({ host, labels, onSelect, onStatus }) {
     const view = mapView(points);
     if (view.mode === "single") map.setView(view.center, MAP_SINGLE_ZOOM, { animate: false });
     else if (view.mode === "fit") {
-      map.fitBounds(view.bounds, { padding: [MAP_FIT_PADDING, MAP_FIT_PADDING], maxZoom: MAP_FIT_MAX_ZOOM, animate: false });
+      map.fitBounds(view.bounds, {
+        paddingTopLeft: [MAP_FIT_PADDING_LEFT, MAP_FIT_PADDING],
+        paddingBottomRight: [MAP_FIT_PADDING, MAP_FIT_PADDING],
+        maxZoom: MAP_FIT_MAX_ZOOM,
+        animate: false,
+      });
     }
   }
 

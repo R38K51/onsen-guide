@@ -13,6 +13,7 @@ export const MAP_MIN_ZOOM = 4;
 export const MAP_MAX_ZOOM = 16;
 export const MAP_BOUNDS = [[23, 121], [47, 148]]; // [[南, 西], [北, 東]]
 export const MAP_FIT_PADDING = 32;
+export const MAP_FIT_PADDING_LEFT = 72; // 左上の「＋」「－」（幅44と余白）に印が重ならないよう、左だけ広げる
 export const MAP_FIT_MAX_ZOOM = 10;
 export const MAP_SINGLE_ZOOM = 11;
 export const MAP_TILE_TIMEOUT_MS = 8000;
