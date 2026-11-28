@@ -103,3 +103,17 @@ test("辞書：地図のキーが日英にそろい、置き換えの名前が�
   assert.ok(DICTIONARIES.ja["about.privacy.text"].includes("地図のタイル（国土地理院）のみ"));
   assert.ok(DICTIONARIES.en["about.privacy.text"].includes("map tiles from GSI"));
 });
+
+test("Leaflet：quietTileLayer が頼る内部の関数が同梱の版にある（版が変わったら落ちる）", async () => {
+  const { runInNewContext } = await import("node:vm");
+  const window = { screen: {}, navigator: { userAgent: "", platform: "" }, document: { documentElement: { style: {} }, createElement: () => ({ style: {} }) } };
+  window.window = window;
+  const sandbox = { window, navigator: window.navigator, document: window.document, self: window };
+  runInNewContext(text("vendor/leaflet/leaflet.js"), sandbox);
+  const L = window.L;
+  assert.equal(L.version, "1.9.4");
+  assert.equal(L.version, LEAFLET_VERSION);
+  assert.equal(typeof L.TileLayer.prototype._abortLoading, "function");
+  assert.equal(typeof L.TileLayer.prototype._removeTile, "function");
+  assert.equal(typeof L.GridLayer.prototype._removeTile, "function");
+});
