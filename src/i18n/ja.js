@@ -169,10 +169,10 @@ export default {
   "card.onMap": "地図で選択中",
   "about.map.h": "地図について",
   "about.map.text1": "地図は、国土地理院の「地理院タイル（淡色地図）」です。このサイトが、その上に印を重ねて表示しています。地図の画像は、このサイトでは保存も加工もしていません。",
-  "about.map.text2": "印の位置は、温泉地のおおよその中心です。Wikidata（CC0）の座標か、公式ページの所在地から手で読み取った位置で、正確さは保証しません。目的地への案内には使わないでください。温泉地ごとの位置の出典は、下の表に書いています。",
+  "about.map.text2": "印の位置は、温泉地のおおよその中心です。Wikidata（CC0）の座標か、公式ページの所在地をもとに、国土地理院の地名検索で手で読み取った位置で、正確さは保証しません。目的地への案内には使わないでください。温泉地ごとの位置の出典は、下の表に書いています。",
   "about.map.text3": "地図の表示には、Leaflet（BSD-2-Clause ライセンス、版 {version}）を使っています。",
   "about.map.link": "地理院タイル一覧（外部サイト）",
   "about.table.position": "位置の出典：",
   "about.table.positionWikidata": "Wikidata（CC0）",
-  "about.table.positionManual": "公式ページの所在地から手で読み取り",
+  "about.table.positionManual": "公式ページの所在地をもとに、国土地理院の地名検索で読み取り",
 };

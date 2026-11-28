@@ -169,10 +169,10 @@ export default {
   "card.onMap": "Selected on Map",
   "about.map.h": "About the Map",
   "about.map.text1": "The map uses GSI Tiles (Pale map) from the Geospatial Information Authority of Japan. This site overlays pins on it. This site does not store or edit the map images.",
-  "about.map.text2": "Pins mark the approximate center of each onsen area. Positions come from Wikidata (CC0) coordinates or were read by hand from the address on the official page. We do not guarantee their accuracy. Do not use them for navigation. The source of each position is listed in the table below.",
+  "about.map.text2": "Pins mark the approximate center of each onsen area. Positions come from Wikidata (CC0) coordinates or were read by hand using GSI place-name search, based on the address on the official page. We do not guarantee their accuracy. Do not use them for navigation. The source of each position is listed in the table below.",
   "about.map.text3": "The map is displayed with Leaflet (BSD-2-Clause license, version {version}).",
   "about.map.link": "GSI Tiles list (external site)",
   "about.table.position": "Location source: ",
   "about.table.positionWikidata": "Wikidata (CC0)",
-  "about.table.positionManual": "Read by hand from the address on the official page",
+  "about.table.positionManual": "Read by hand using GSI place-name search, based on the address on the official page",
 };

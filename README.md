@@ -7,7 +7,7 @@
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![Live site](https://img.shields.io/badge/live-GitHub%20Pages-2f6f62.svg)](https://r38k51.github.io/onsen-guide/)
-[![No runtime dependencies](https://img.shields.io/badge/runtime%20dependencies-none-lightgrey.svg)](package.json)
+[![Bundled: Leaflet 1.9.4](https://img.shields.io/badge/bundled-Leaflet%201.9.4-lightgrey.svg)](vendor/leaflet/)
 [![Unofficial](https://img.shields.io/badge/site-unofficial-lightgrey.svg)](#english)
 
 [English](#english) · [日本語](#日本語)
@@ -15,7 +15,8 @@
 <img src="docs/screenshot-390-ja.png" alt="Map and area list on a phone (390 px wide) / スマホ（幅390px）の地図と一覧" width="280">
 <img src="docs/screenshot-1366-en.png" alt="English screen on a computer (1366 px wide) / パソコン（幅1366px）の英語の画面" width="560">
 
-<sub>Screens of the real site with its real data (some onsen areas only). / 実際のサイトと実際の収録データの画面です（収録は一部の温泉地だけです）。</sub>
+<sub>Screens of the real site with its real data (some onsen areas only). / 実際のサイトと実際の収録データの画面です（収録は一部の温泉地だけです）。
+<br>Map: GSI tiles (pale map) with this site's own pins added. / 地図：地理院タイル（淡色地図）に、このサイトが印を追記。</sub>
 
 </div>
 
@@ -73,7 +74,7 @@ npm run test:e2e    # browser tests (Playwright)
 
 - `data/classification.json` (spring-type classification) was made from the Ministry of the Environment's "Guidelines for Mineral Spring Analysis" (revised 2014, 鉱泉分析法指針) and the notice on the signs required by Article 18 of the Hot Springs Act. Both are linked on the site's About screen.
 - `data/onsen.json` (onsen areas) copies the spring-type names from the official pages of tourism associations and local governments, word for word. Each entry has its source URL and the date we checked it.
-- Pin positions (`position` in `data/onsen.json`) are the approximate center of each area. Each entry gives its source: a Wikidata coordinate (CC0) or a position read by hand from the area's address on its official page. OpenStreetMap data is not used.
+- Pin positions (`position` in `data/onsen.json`) are the approximate center of each area. Each entry gives its source: a Wikidata coordinate (CC0) or a position read by hand using GSI place-name search, based on the address on the official page. OpenStreetMap data is not used.
 - The map images are GSI Tiles (Pale map) from the Geospatial Information Authority of Japan (<https://maps.gsi.go.jp/development/ichiran.html>). They are not stored or edited by this site; the site only overlays pins.
 - Third-party: [Leaflet](https://leafletjs.com/) 1.9.4 (BSD-2-Clause, Copyright Volodymyr Agafonkin and CloudMade) is bundled in `vendor/leaflet/` with its license file.
 - The Ministry of the Environment materials are used under the Public Data License, version 1.0 (PDL 1.0). Created by processing "Mineral Spring Analysis Guidelines (revised 2014)" (Ministry of the Environment) (https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf) and the notice on "Standards for posting contraindications and bathing or drinking precautions under Article 18, paragraph 1 of the Hot Springs Act" (Ministry of the Environment) (https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf). It was not made by the Ministry of the Environment.
@@ -138,7 +139,7 @@ npm run test:e2e    # ブラウザのテスト（Playwright）
 
 - `data/classification.json`（湯の種類の分類）は、環境省の「鉱泉分析法指針（平成26年改訂）」と、温泉法第18条の掲示の基準についての通知をもとに作りました。2つとも、サイトの「このサイトについて」の画面にリンクがあります。
 - `data/onsen.json`（温泉地）は、各観光協会・自治体の公式ページにある泉質名を、原文のまま写したものです。1件ごとに、出典のURLと確認日があります。
-- 印の位置（`data/onsen.json` の `position`）は、温泉地のおおよその中心です。1件ごとに、出典として Wikidata の座標（CC0）か、公式ページの所在地から手で読み取った位置を書いています。OpenStreetMap のデータは使っていません。
+- 印の位置（`data/onsen.json` の `position`）は、温泉地のおおよその中心です。1件ごとに、位置の出典（Wikidata の座標（CC0）か、手で読み取ったか）を書いています。手で読み取った件は、公式ページの所在地をもとに、国土地理院の地名検索で読み取りました。OpenStreetMap のデータは使っていません。
 - 地図の画像は、国土地理院の「地理院タイル（淡色地図）」です（<https://maps.gsi.go.jp/development/ichiran.html>）。このサイトでは保存も加工もせず、印を重ねて表示するだけです。
 - 外部の部品：[Leaflet](https://leafletjs.com/) 1.9.4（BSD-2-Clause、Copyright Volodymyr Agafonkin、CloudMade）を `vendor/leaflet/` に、ライセンスのファイルとともに同梱しています。
 - 環境省の資料は、公共データ利用規約（第1.0版）に従って使っています。「鉱泉分析法指針（平成26年改訂）」（環境省）（https://www.env.go.jp/nature/onsen/docs/shishin_bunseki.pdf）、「温泉法第18条第1項の規定に基づく禁忌症及び入浴又は飲用上の注意の掲示等の基準」の通知（環境省）（https://www.env.go.jp/nature/onsen/pdf/2-5_p_11.pdf）を加工して作成。環境省が作成したものではありません。
